@@ -1,0 +1,57 @@
+﻿@model ShopASP.Models.ViewModel.AdminViewModels
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    ViewBag.Title = "Đăng nhập";
+}
+<div class="row">
+    <div class="col-md-5 offset-4">
+        <div class="col-md-10">
+            <h2 style="text-align: center">@ViewBag.Title</h2>
+        </div>
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-md-10">
+                    <h4 style="text-align: center">Đăng nhập vào tài khoản của bạn</h4>
+                    <hr />
+                </div>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="text-danger">
+                    @ViewData["Error"]
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" style="display:flex" />
+                    </div>
+                </div>
+                <p>
+                    Bạn quên/mất tài khoản ? Hãy liên hệ quản trị viên <a href="mailto:gooflow2018@gmail.com">gooflow2018@gmail.com</a>
+                </p>
+            }
+        </section>
+    </div>
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

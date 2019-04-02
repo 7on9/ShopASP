@@ -29,7 +29,9 @@
     <link href="~/Content/Extra/css/theme.css" rel="stylesheet" media="all">
 
 </head>
-
+@{ 
+    @model ShopASP.Models.account
+}
 <body class="animsition">
     <div class="page-wrapper">
 
@@ -94,37 +96,46 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="~/Content/Extra/images/icon/avatar-01.jpg" alt="John Doe" />
+                                            <img src="~/Images/Rem_00015.png" alt="admin" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            @if (Session["admin"] != null)
+                                            {
+                                                <a class="js-acc-btn" href="#">@Model.account_username</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="js-acc-btn" href="#">username</a>
+                                            }
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="~/Content/Extra/images/icon/avatar-01.jpg" alt="John Doe" />
+                                                        <img src="~/Images/Rem_00015.png" alt="admin" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                        @if (Session["admin"] != null)
+                                                        {
+                                                            <a href="#">@Model.account_username</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#">username</a>
+                                                        }
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                        <i class="zmdi zmdi-account"></i>Đổi mật khẩu</a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="/Admin/Logout">
                                                     <i class="zmdi zmdi-power"></i>Đăng xuất</a>
                                             </div>
                                         </div>
@@ -142,10 +153,6 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         @RenderBody()
-                        @*<div class="row m-t-25">
-
-                        </div>*@
-                        <!--credit-->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">

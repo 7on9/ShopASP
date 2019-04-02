@@ -41,7 +41,7 @@ namespace ShopASP.Controllers
                 );
             if (customer != null)
             {
-                Session["customer"] = customer;
+                Session["account"] = customer;
                 return RedirectToAction("Index", "Home");
             }
             ViewData["Error"] = "Đăng nhập thất bại";
@@ -66,13 +66,13 @@ namespace ShopASP.Controllers
         [HttpPost]
         public ActionResult EditInfor(CustomerViewModels form)
         { 
-            customer thisCustomer = (customer)Session["customer"];
+            customer thisCustomer = (customer)Session["account"];
             HttpPostedFileBase file = form.ImagePath;
             if(file != null && file.ContentLength > 0 )
             {
                 string extend = Path.GetExtension(file.FileName);
                 string fileName = Utility.ComputeSha256Hash((thisCustomer.customer_email)) + extend;
-                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_CUSTOMER), fileName);
+                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_EMPLOYEES), fileName);
                 
                 var customer = db
                 .customers
