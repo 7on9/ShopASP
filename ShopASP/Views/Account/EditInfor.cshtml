@@ -1,4 +1,5 @@
-﻿@model ShopASP.Models.Customer
+﻿@model ShopASP.Models.ViewModel.CustomerViewModels
+
 @{
     ViewBag.Title = "Thêm thông tin cho tài khoản của bạn";
 }
@@ -7,57 +8,59 @@
         <div class="col-md-10">
             <h2 style="text-align: center">@ViewBag.Title</h2>
         </div>
-        @using (Html.BeginForm("AddInfor", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("EditInfor", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
             <div class="col-md-10">
-                <h4 style="text-align: center">Tạo tài khoản mới</h4>
+                <h4 style="text-align: center">Thêm thông tin giúp chúng tôi phục vụ bạn tốt hơn</h4>
                 <hr />
             </div>
 
             @*@Html.ValidationSummary(true)*@
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.Label("Họ và Tên", new { @class = "col-md-10 control-label" })
+                @Html.LabelFor(m => m.Dob, new { @class = "col-md-10 control-label" })
                 <div class="col-md-10">
-                    Tên mới
-                    @Html.TextBox("Name", "", new { @class = "form-control" })
-                    <div class="text-danger">
-                        @ViewData["ErrorName"]
-                    </div>
+                    @Html.TextBoxFor(m => m.Dob, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
-                @Html.Label("Email", new { @class = "col-md-10 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBox("Email", "", new { @class = "form-control" })
 
-                    <div class="text-danger">
-                        @ViewData["ErrorEmail"]
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Phone, new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
                 </div>
             </div>
+
             <div class="form-group">
                 @Html.Label("Giới tính", new { @class = "col-md-10 control-label" })
-                <div class="col-md-10">
-                    @Html.RadioButton("Gender", "Nam", true)
-                    @Html.RadioButton("Gender", "Nữ")
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Địa chỉ", new { @class = "col-md-10 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBox("Address", "", new { @class = "form-control" })
-
-                    <div class="text-danger">
-                        @ViewData["ErrorAddress"]
+                <div class="col-md-10 row offset-3">
+                    <div class="col-md-2">
+                        Nam @Html.RadioButtonFor(m => m.Gender, false)
                     </div>
-
+                    <div class="col-md-2">
+                        Nữ @Html.RadioButtonFor(m => m.Gender, true)
+                    </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address, new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImagePath, new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    <input type="file" id="ImagePath" name="ImagePath" class="form-control-file" value="Tải lên" />
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="AddInfor" />
+                    <input type="submit" class="btn btn-default col-md-12" value="Thêm thông tin" />
                 </div>
             </div>
         }

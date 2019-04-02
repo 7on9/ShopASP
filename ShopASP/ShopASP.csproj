@@ -134,7 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\dbShopASP.designer.cs">
       <AutoGen>True</AutoGen>
@@ -144,6 +144,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Utility\Utility.cs" />
+    <Compile Include="Models\ViewModel\CustomerViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -629,17 +630,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\EditInfor.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Admin\CreateNewAccount.cshtml" />
     <Content Include="Views\Admin\Customer.cshtml" />
     <Content Include="Views\Admin\Employee.cshtml" />
@@ -661,7 +657,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\lib\imgUpload\" />
-    <Folder Include="Images\" />
+    <Folder Include="Images\customers\" />
+    <Folder Include="Images\employees\" />
+    <Folder Include="Images\products\" />
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Employee\" />
     <Folder Include="Views\Product\" />

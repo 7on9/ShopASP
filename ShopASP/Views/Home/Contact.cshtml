@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using ShopASP.Models
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2" id="ftco-navbar">
     <div class="container">
@@ -22,35 +22,21 @@
                 <li class="nav-item"><a href="../../Home/About" class="nav-link">Thông tin</a></li>
                 <li class="nav-item active"><a href="../../Home/Contact" class="nav-link">Liên hệ</a></li>
                 <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-                @if (Request.IsAuthenticated)
-                {
-
-                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <li class="nav-item">
-                            <a>"Hello " + @User.Identity.GetUserName()</a>
-                        </li>
-                        <li class="nav-item"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-
-                    }
-                    @*<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="pdt-15px">
-                        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.GetUserName()!</a>
-                    </li>
-                    <li class="pdt-10px">
-                        <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
-                    </li>
-                </ul>
-            </form>*@
+                @{
+                    customer customer = (customer)Session["customer"];
                 }
-                else
-                {
+                <li class="nav-item pdl-10 pdt-15px">
+                    @if (Session["customer"] != null)
+                    {
+                        <a href="/Account/EditInfor"> @customer.customer_name </a>
+                        <a href="/Account/Logout" class="pdl-10">Đăng xuất</a>
+                    }
+                    else
+                    {
                     <li class="nav-item"><a href="../../Account/Login" class="nav-link">Đăng nhập</a></li>
                 }
-            </ul>
+                    </li>
+                </ul>
         </div>
     </div>
 </nav>

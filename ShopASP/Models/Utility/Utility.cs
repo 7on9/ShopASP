@@ -9,6 +9,10 @@ namespace ShopASP.Models.Utility
 {
     public class Utility
     {
+        public static string PATH_IMG_PRODUCT = "~/Images/products/";
+        public static string PATH_IMG_CUSTOMER = "~/Images/customers/";
+        public static string PATH_IMG_EMPLOYEE = "~/Images/employees/";
+
         public static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   

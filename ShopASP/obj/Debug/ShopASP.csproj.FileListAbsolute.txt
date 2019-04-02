@@ -1,4 +1,3 @@
-E:\ShopASP\ShopASP\obj\Debug\ShopASP.csproj.CoreCompileInputs.cache
 E:\ShopASP\ShopASP\bin\ShopASP.dll.config
 E:\ShopASP\ShopASP\bin\ShopASP.dll
 E:\ShopASP\ShopASP\bin\ShopASP.pdb
@@ -74,6 +73,8 @@ E:\ShopASP\ShopASP\bin\Antlr3.Runtime.pdb
 E:\ShopASP\ShopASP\bin\System.Diagnostics.DiagnosticSource.xml
 E:\ShopASP\ShopASP\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 E:\ShopASP\ShopASP\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\ShopASP\ShopASP\obj\Debug\ShopASP.csprojAssemblyReference.cache
+E:\ShopASP\ShopASP\obj\Debug\ShopASP.csproj.CoreCompileInputs.cache
 E:\ShopASP\ShopASP\obj\Debug\ShopASP.csproj.CopyComplete
 E:\ShopASP\ShopASP\obj\Debug\ShopASP.dll
 E:\ShopASP\ShopASP\obj\Debug\ShopASP.pdb
