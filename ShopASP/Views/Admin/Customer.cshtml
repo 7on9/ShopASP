@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<ShopASP.Models.Customer>
+
+
+<!-- Item -->
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="title-1 m-b-25 text-center">Danh sách khách hàng</h2>
+        <div class="table-responsive table--no-card m-b-40">
+            <table class="table table-borderless table-striped table-earning">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Họ & tên</th>
+                        <th>Giới tính</th>
+                        <th>Năm sinh</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model)
+                    {
+                        <tr>
+                            <td>@customer.ID</td>
+                            <td>@customer.Name</td>
+                            <td>@(customer.Gender == true ? "Nam" : "Nữ")</td>
+                            <td>@customer.Dob</td>
+                            <td>@customer.Address</td>
+                            <td>@customer.Phone</td>
+                            <td>@customer.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

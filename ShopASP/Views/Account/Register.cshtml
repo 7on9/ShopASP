@@ -1,0 +1,72 @@
+﻿@model ShopASP.Models.Customer
+@{
+    ViewBag.Title = "Register";
+}
+<div class="row">
+    <div class="col-md-6 offset-4">
+        <div class="col-md-10">
+            <h2 style="text-align: center">@ViewBag.Title</h2>
+        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-10">
+                <h4 style="text-align: center">Tạo tài khoản mới</h4>
+                <hr />
+            </div>
+
+            @*@Html.ValidationSummary(true)*@
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("Họ và Tên", new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBox("Name", "", new { @class = "form-control" })
+                    <div class="text-danger">
+                        @ViewData["ErrorName"]
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Email", new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBox("Email", "", new { @class = "form-control" })
+
+                    <div class="text-danger">
+                        @ViewData["ErrorEmail"]
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Mật khẩu", new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    @Html.Password("Password", "", new { @class = "form-control" })
+
+                    <div class="text-danger">
+                        @ViewData["ErrorReTypePassword"]
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Nhập lại mật khẩu", new { @class = "col-md-10 control-label" })
+                <div class="col-md-10">
+                    @Html.Password("ReTypePassword", "", new { @class = "form-control" })
+                    @ViewData["ErrorReTypePassword"]
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Register" />
+                </div>
+            </div>
+            <p>
+                Bạn đã có tài khoản ? &nbsp;
+                @Html.ActionLink("Đăng nhập", "Login")
+            </p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

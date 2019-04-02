@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="shopasp" Class="dbShopASPDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-KQQVR1I\SQLBAMBOO;Initial Catalog=shopasp;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="shopaspConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.account" Member="accounts">
+    <Type Name="account">
+      <Column Name="account_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="account_username" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="account_password" Type="System.String" DbType="VarChar(65)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.size" Member="sizes">
+    <Type Name="size">
+      <Column Name="size_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="size_name" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="size_cart_detail" Member="cart_details" ThisKey="size_id" OtherKey="size_id" Type="cart_detail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.bill" Member="bills">
+    <Type Name="bill">
+      <Column Name="bill_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="employee_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="customer_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cart_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="time_create" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="bill_log_payment" Member="log_payments" ThisKey="bill_id" OtherKey="bill_id" Type="log_payment" />
+      <Association Name="cart_bill" Member="cart" ThisKey="cart_id" OtherKey="cart_id" Type="cart" IsForeignKey="true" />
+      <Association Name="customer_bill" Member="customer" ThisKey="customer_id" OtherKey="customer_id" Type="customer" IsForeignKey="true" />
+      <Association Name="employee_bill" Member="employee" ThisKey="employee_id" OtherKey="employee_id" Type="employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cart" Member="carts">
+    <Type Name="cart">
+      <Column Name="cart_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="time_create" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="cart_status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="cart_bill" Member="bills" ThisKey="cart_id" OtherKey="cart_id" Type="bill" />
+      <Association Name="cart_cart_detail" Member="cart_details" ThisKey="cart_id" OtherKey="cart_id" Type="cart_detail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cart_detail" Member="cart_details">
+    <Type Name="cart_detail">
+      <Column Name="cart_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="size_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="cart_cart_detail" Member="cart" ThisKey="cart_id" OtherKey="cart_id" Type="cart" IsForeignKey="true" />
+      <Association Name="size_cart_detail" Member="size" ThisKey="size_id" OtherKey="size_id" Type="size" IsForeignKey="true" />
+      <Association Name="product_cart_detail" Member="product" ThisKey="product_id" OtherKey="product_id" Type="product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.category" Member="categories">
+    <Type Name="category">
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="category_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="category_decrible" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.color" Member="colors">
+    <Type Name="color">
+      <Column Name="color_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="color_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="color_product_img" Member="product_imgs" ThisKey="color_id" OtherKey="color_id" Type="product_img" />
+    </Type>
+  </Table>
+  <Table Name="dbo.customer" Member="customers">
+    <Type Name="customer">
+      <Column Name="customer_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="customer_name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="customer_dob" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="customer_gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="customer_address" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="customer_email" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="customer_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="customer_password" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="customer_level" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="time_create" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="last_update" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="customer_bill" Member="bills" ThisKey="customer_id" OtherKey="customer_id" Type="bill" />
+      <Association Name="customer_customer_img" Member="customer_imgs" ThisKey="customer_id" OtherKey="customer_id" Type="customer_img" />
+    </Type>
+  </Table>
+  <Table Name="dbo.customer_img" Member="customer_imgs">
+    <Type Name="customer_img">
+      <Column Name="customer_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="customer_img_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="customer_customer_img" Member="customer" ThisKey="customer_id" OtherKey="customer_id" Type="customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.employee" Member="employees">
+    <Type Name="employee">
+      <Column Name="employee_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="employee_name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="employee_dob" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="employee_gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="employee_address" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="employee_email" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="employee_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="employee_password" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="employee_role" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="employee_bill" Member="bills" ThisKey="employee_id" OtherKey="employee_id" Type="bill" />
+      <Association Name="employee_employee_img" Member="employee_imgs" ThisKey="employee_id" OtherKey="employee_id" Type="employee_img" />
+      <Association Name="employee_log_change_product" Member="log_change_products" ThisKey="employee_id" OtherKey="employee_id" Type="log_change_product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.employee_img" Member="employee_imgs">
+    <Type Name="employee_img">
+      <Column Name="employee_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="employee_img_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="employee_employee_img" Member="employee" ThisKey="employee_id" OtherKey="employee_id" Type="employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.history_change_product" Member="history_change_products">
+    <Type Name="history_change_product">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="log_change_product_history_change_product" Member="log_change_product" ThisKey="id" OtherKey="id" Type="log_change_product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.log_change_product" Member="log_change_products">
+    <Type Name="log_change_product">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="time_create" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="employee_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="log_change_product_history_change_product" Member="history_change_products" ThisKey="id" OtherKey="id" Type="history_change_product" />
+      <Association Name="employee_log_change_product" Member="employee" ThisKey="employee_id" OtherKey="employee_id" Type="employee" IsForeignKey="true" />
+      <Association Name="product_log_change_product" Member="product" ThisKey="product_id" OtherKey="product_id" Type="product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.log_payment" Member="log_payments">
+    <Type Name="log_payment">
+      <Column Name="bill_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="time_create" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="bill_log_payment" Member="bill" ThisKey="bill_id" OtherKey="bill_id" Type="bill" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.product" Member="products">
+    <Type Name="product">
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="product_quantum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="product_price" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="product_cart_detail" Member="cart_details" ThisKey="product_id" OtherKey="product_id" Type="cart_detail" />
+      <Association Name="product_log_change_product" Member="log_change_products" ThisKey="product_id" OtherKey="product_id" Type="log_change_product" />
+      <Association Name="product_product_detail" Member="product_details" ThisKey="product_id" OtherKey="product_id" Type="product_detail" />
+      <Association Name="product_product_img" Member="product_imgs" ThisKey="product_id" OtherKey="product_id" Type="product_img" />
+    </Type>
+  </Table>
+  <Table Name="dbo.product_detail" Member="product_details">
+    <Type Name="product_detail">
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="product_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_tag" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_decrible" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="product_product_detail" Member="product" ThisKey="product_id" OtherKey="product_id" Type="product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.product_img" Member="product_imgs">
+    <Type Name="product_img">
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="product_img_path" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="color_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="color_product_img" Member="color" ThisKey="color_id" OtherKey="color_id" Type="color" IsForeignKey="true" />
+      <Association Name="product_product_img" Member="product" ThisKey="product_id" OtherKey="product_id" Type="product" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
