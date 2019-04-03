@@ -135,6 +135,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\ProductImg.cs" />
     <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\dbShopASP.designer.cs">
@@ -659,6 +661,8 @@
     <Content Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Shop\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -667,7 +671,6 @@
     <Folder Include="Images\employees\" />
     <Folder Include="Images\products\" />
     <Folder Include="Views\Customer\" />
-    <Folder Include="Views\Employee\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Views\Role\" />
   </ItemGroup>

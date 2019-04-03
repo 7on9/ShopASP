@@ -15,9 +15,9 @@ namespace ShopASP.Controllers
         {
             var listProducts = (from a in dbShopASP.products
                                join b in dbShopASP.product_details
-                               on a.product_id equals b.product_id
+                                on a.product_id equals b.product_id
                                join c in dbShopASP.product_imgs
-                               on a.product_id equals c.product_id
+                                on a.product_id equals c.product_id
                                select new {
                                    a.product_id,
                                    a.product_price,
@@ -29,10 +29,10 @@ namespace ShopASP.Controllers
             foreach(var product in listProducts)
             {
                 products.Add(new Product());
-                products[i].ID = product.product_id;
+                products[i].Id = product.product_id;
                 products[i].Name = product.product_name;
-                products[i].ImagePath = product.product_img_path;
-                products[i].Price = (double)product.product_price;
+                //products[i].ImagePath = product.product_img_path;
+                products[i].Price = (float)product.product_price;
                 i++;
             }
             return products;

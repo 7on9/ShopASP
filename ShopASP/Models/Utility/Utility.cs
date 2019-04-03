@@ -9,9 +9,38 @@ namespace ShopASP.Models.Utility
 {
     public class Utility
     {
-        public static string PATH_IMG_PRODUCT = "~/Images/products/";
-        public static string PATH_IMG_EMPLOYEES = "~/Images/customers/";
-        public static string PATH_IMG_EMPLOYEE = "~/Images/employees/";
+        public static string PATH_IMG_PRODUCT = "/Images/products/";
+        public static string PATH_IMG_EMPLOYEES = "/Images/customers/";
+        public static string PATH_IMG_EMPLOYEE = "/Images/employees/";
+
+        public static string CorrectPath(string path)
+        {
+            int start = -1;
+            string s = "";
+            for (int i = 0; i < path.Length; i++)
+            {
+                if (start == -1)
+                {
+                    try
+                    {
+                        if (path[i] == '\\' && path[i + 1] == 'I' && path[i + 2] == 'm' && path[i + 3] == 'a')
+                            start = i;
+                    }
+                    catch (Exception e)
+                    {
+                    }
+                }
+                if (i >= start && start != -1)
+                    {
+                        if (path[i] == '\\')
+                            s += '/';
+                        else
+                            s += path[i];
+                    }
+                
+            }
+            return s;
+        }
 
         public static string ComputeSha256Hash(string rawData)
         {
