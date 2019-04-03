@@ -364,7 +364,7 @@ namespace ShopASP.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_size_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_size_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int size_id
 		{
 			get
@@ -1045,6 +1045,8 @@ namespace ShopASP.Models
 		
 		private string _color_name;
 		
+		private string _color_hex;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1053,6 +1055,8 @@ namespace ShopASP.Models
     partial void Oncolor_idChanged();
     partial void Oncolor_nameChanging(string value);
     partial void Oncolor_nameChanged();
+    partial void Oncolor_hexChanging(string value);
+    partial void Oncolor_hexChanged();
     #endregion
 		
 		public color()
@@ -1096,6 +1100,26 @@ namespace ShopASP.Models
 					this._color_name = value;
 					this.SendPropertyChanged("color_name");
 					this.Oncolor_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_color_hex", DbType="VarChar(10)")]
+		public string color_hex
+		{
+			get
+			{
+				return this._color_hex;
+			}
+			set
+			{
+				if ((this._color_hex != value))
+				{
+					this.Oncolor_hexChanging(value);
+					this.SendPropertyChanging();
+					this._color_hex = value;
+					this.SendPropertyChanged("color_hex");
+					this.Oncolor_hexChanged();
 				}
 			}
 		}
@@ -1205,7 +1229,7 @@ namespace ShopASP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_name", DbType="NVarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
 		public string customer_name
 		{
 			get
@@ -1285,7 +1309,7 @@ namespace ShopASP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_email", DbType="VarChar(200)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_email", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
 		public string customer_email
 		{
 			get
@@ -1305,7 +1329,7 @@ namespace ShopASP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_phone", DbType="VarChar(15)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_phone", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
 		public string customer_phone
 		{
 			get

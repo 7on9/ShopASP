@@ -9,7 +9,7 @@
   </Table>
   <Table Name="dbo.size" Member="sizes">
     <Type Name="size">
-      <Column Name="size_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="size_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="size_name" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Association Name="size_cart_detail" Member="cart_details" ThisKey="size_id" OtherKey="size_id" Type="cart_detail" />
     </Type>
@@ -58,18 +58,19 @@
     <Type Name="color">
       <Column Name="color_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="color_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="color_hex" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Association Name="color_product_img" Member="product_imgs" ThisKey="color_id" OtherKey="color_id" Type="product_img" />
     </Type>
   </Table>
   <Table Name="dbo.customer" Member="customers">
     <Type Name="customer">
       <Column Name="customer_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="customer_name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="customer_name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="customer_dob" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="customer_gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="customer_address" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="customer_email" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="customer_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="customer_email" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="customer_phone" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
       <Column Name="customer_password" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="customer_level" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="time_create" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />

@@ -65,7 +65,8 @@ create table product(
 
 create table color(
 	color_id int identity(1,1) PRIMARY KEY,
-	color_name nvarchar(50)
+	color_name nvarchar(50),
+	color_hex varchar(10)
 )
 
 create table product_detail(
@@ -82,7 +83,7 @@ create table product_img(
 )
 
 create table size(
-	size_id int identity(1,1) PRIMARY KEY,
+	size_id int PRIMARY KEY,
 	size_name nvarchar(30)
 )
 

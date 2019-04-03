@@ -41,12 +41,11 @@
                         <tr>
                             <td>@employee.ID</td>
                             <td>@employee.Name</td>
-                            <td>@(employee.Gender == true ? "Nam" : "Nữ")</td>
+                            <td>@(employee.Gender == false ? "Nam" : "Nữ")</td>
                             <td>@employee.Dob</td>
                             <td>@employee.Address</td>
                             <td>@employee.Phone</td>
                             <td>@employee.Email</td>
-                            <td>@employee.Role</td>
                         </tr>
                     }
                 </tbody>

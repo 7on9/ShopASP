@@ -29,9 +29,7 @@
     <link href="~/Content/Extra/css/theme.css" rel="stylesheet" media="all">
 
 </head>
-@{ 
-    @model ShopASP.Models.account
-}
+@using ShopASP.Models
 <body class="animsition">
     <div class="page-wrapper">
 
@@ -43,6 +41,13 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
+
+                        <li>
+                            <a href="/Admin/Index">
+                                <i class="fas fa-chart-bar"></i>Tổng quan
+                            </a>
+                        </li>
+
                         <li>
                             <a href="../../../Admin/Employee">
                                 <i class="fas fa-user"></i>Nhân viên
@@ -53,11 +58,7 @@
                                 <i class="fas fa-users"></i>Khách hàng
                             </a>
                         </li>
-                        <li>
-                            <a href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Charts
-                            </a>
-                        </li>
+
                         <li>
                             <a href="table.html">
                                 <i class="fas fa-table"></i>Tables
@@ -101,7 +102,7 @@
                                         <div class="content">
                                             @if (Session["admin"] != null)
                                             {
-                                                <a class="js-acc-btn" href="#">@Model.account_username</a>
+                                            <a class="js-acc-btn" href="#">@(((account)Session["admin"]).account_username)</a>
                                             }
                                             else
                                             {
@@ -119,7 +120,7 @@
                                                     <h5 class="name">
                                                         @if (Session["admin"] != null)
                                                         {
-                                                            <a href="#">@Model.account_username</a>
+                                                            <a href="#">@(((account)Session["admin"]).account_username)</a>
                                                         }
                                                         else
                                                         {

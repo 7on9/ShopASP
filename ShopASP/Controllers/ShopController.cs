@@ -35,6 +35,7 @@ namespace ShopASP.Controllers
                                b.product_tag,
                                c.color_id,
                                d.color_name,
+                               d.color_hex,
                                b.product_name,
                                c.product_img_path
                            }).ToList();
@@ -52,7 +53,7 @@ namespace ShopASP.Controllers
             foreach (var i in productFromDb)
             { 
                 product.ImagePaths.Add(new ProductImg(i.product_id, i.product_img_path, i.color_id));
-                product.Colors.Add(new Color(i.color_id, i.color_name));
+                product.Colors.Add(new Color(i.color_id, i.color_name, i.color_hex));
             }
 
             return View(product);

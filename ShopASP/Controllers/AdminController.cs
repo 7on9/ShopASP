@@ -110,19 +110,20 @@ namespace ShopASP.Controllers
             return View();
         }
 
-        // GET: /Account/Login
+        // GET: /Admin/Login
 
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: /Account/Login
+        // POST: /Admin/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(AdminViewModels model)
         {
-            var account = db
+            account account = new account();
+            account = db
                 .accounts
                 .SingleOrDefault
                 (
@@ -157,7 +158,7 @@ namespace ShopASP.Controllers
             {
                 string extend = Path.GetExtension(file.FileName);
                 string fileName = Utility.ComputeSha256Hash((thisAccount.account_username)) + extend;
-                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_EMPLOYEES), fileName);
+                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCTS), fileName);
 
                 employee newEmployee = new employee();
 
@@ -168,6 +169,11 @@ namespace ShopASP.Controllers
                 newEmployee.employee_phone = form.Phone;
                 newEmployee.employee_address = form.Address;
 
+                db.employees.InsertOnSubmit(newEmployee);
+                db.SubmitChanges();
+                newEmployee.employee_id = db.employees.OrderByDescending(u => u.employee_id).FirstOrDefault().employee_id;
+
+
                 employee_img employee_Img = new employee_img();
                 employee_Img.employee_id = newEmployee.employee_id;
                 employee_Img.employee_img_path = path;
@@ -177,7 +183,7 @@ namespace ShopASP.Controllers
                 //db.customer_imgs.InsertOnSubmit(customer_Img);
                 db.SubmitChanges();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Admin");
             }
             return View();
 
