@@ -8,6 +8,6 @@ namespace ShopASP.Models.ViewModel
     public class CartItemViewModels
     {
         public int IdProduct { get; set; }
-        public int Quantity { get; set; }
+        public int quantity { get; set; }
     }
 }

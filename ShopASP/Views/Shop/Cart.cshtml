@@ -2,10 +2,15 @@
 @{
     ViewBag.Title = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var x = (Session["cart"] as List<CartItem>);
+    if(x == null)
+    {
+        x = new List<CartItem>();
+    }
 }
 
 @using ShopASP.Models
-@model IEnumerable<ShopASP.Models.CartItem>
+@model List<ShopASP.Models.CartItem>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2" id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="../../">Gooflow</a>
@@ -27,7 +32,7 @@
                 </li>
                 <li class="nav-item"><a href="../../Home/About" class="nav-link">Thông tin</a></li>
                 <li class="nav-item"><a href="../../Home/Contact" class="nav-link">Liên hệ</a></li>
-                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
                 @{
                     customer customer = (customer)Session["account"];
                 }
@@ -84,7 +89,7 @@
                                             <td class="product-remove"><a href="/Shop/Cart/RemoveFromCart/@item.Product.Id"><span class="ion-ios-close"></span></a></td>
 
                                             <td class="image-prod">
-                                                <img class="img" src="@item.Product.ImagePaths" />
+                                                <img class="img" src="@item.Product.ImagePaths.ImagePath" />
                                             </td>
 
                                             <td class="product-name">
@@ -112,13 +117,13 @@
                                                 </div>
                                             </td>
 
-                                            <td class="total">@(item.Product.Price * item.Quantity) 000 VNĐ</td>
+                                            <td class="total">@(item.Product.Price * item.quantity) 000 VNĐ</td>
                                         </tr><!-- END TR-->
 
                                     </tbody>
                                 }
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
 
                             }

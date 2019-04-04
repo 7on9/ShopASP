@@ -14639,3 +14639,8 @@ section {
 .vue-lists ul, .vue-lists ol {
     padding-left: 30px;
 }
+
+.img_mini {
+    width: 100px;
+    height: 150px;
+}

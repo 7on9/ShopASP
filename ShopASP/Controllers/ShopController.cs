@@ -60,19 +60,32 @@ namespace ShopASP.Controllers
         public ActionResult Product(int id)
         {
             ViewBag.Color = db.colors.ToList();
+            ViewBag.Size = db.sizes.ToList();
             return View(GetProduct(id));
         }
 
-        public ActionResult AddToCart(CartItemViewModels cartItem)
+        public ActionResult AddToCart(FormCollection cartItem)
         {
             List<CartItem> carts = Session["cart"] == null ? (new List<CartItem>()) : (List<CartItem>)Session["cart"];
-            carts.Add(new CartItem(GetProduct(cartItem.IdProduct), cartItem.Quantity));
-            return View(carts);
+            CartItem item = carts.Find(m => m.Product.Id == int.Parse(cartItem["IdProduct"]));
+            if(item != null)
+            {
+                item.quantity += int.Parse(cartItem["quantity"]);
+            }
+            else
+            {
+                carts.Add(new CartItem(
+                    GetProduct(
+                        int.Parse(cartItem["IdProduct"])), 
+                        int.Parse(cartItem["quantity"])));
+                Session["cart"] = carts;
+            }
+            return RedirectToAction("Cart", "Shop", carts);
         }
 
         public ActionResult Cart()
         {
-            return View();
+            return View(Session["cart"] == null ? (new List<CartItem>()) : (List<CartItem>)Session["cart"]);
         }
 
     }

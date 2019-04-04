@@ -1,5 +1,11 @@
 ﻿@using ShopASP.Models
-
+@{ 
+    var x = (Session["cart"] as List<CartItem>);
+    if (x == null)
+    {
+        x = new List<CartItem>();
+    }
+}
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2" id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="../../">Gooflow</a>
@@ -21,7 +27,7 @@
                 </li>
                 <li class="nav-item"><a href="../../Home/About" class="nav-link">Thông tin</a></li>
                 <li class="nav-item active"><a href="../../Home/Contact" class="nav-link">Liên hệ</a></li>
-                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
                 @{
                     customer customer = (customer)Session["account"];
                 }

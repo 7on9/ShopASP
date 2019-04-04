@@ -4,6 +4,11 @@
 
     ViewBag.Title = "Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var x = (Session["cart"] as List<CartItem>);
+    if (x == null)
+    {
+        x = new List<CartItem>();
+    }
 }
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -29,7 +34,7 @@
                 <li class="nav-item">
                     <a href="../../Home/Contact" class="nav-link">Liên hệ</a>
                 </li>
-                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
                 @{
                     customer customer = (customer)Session["account"];
                 }
@@ -67,6 +72,7 @@
                     <div class="col-lg-6 mb-5 ftco-animate">
                         <a href="@Model.ImagePaths.ImagePath" class="image-popup"><img src="@Model.ImagePaths.ImagePath" class="img-fluid" alt="Colorlib Template"></a>
                     </div>
+                    <input class="form-control" style="display: none" id="IdProduct" name="IdProduct" value="@Model.Id"/>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                         <h3>@Model.Name</h3>
                         <p class="price"><span>@(Model.Price * 1000) VNĐ</span></p>
@@ -90,10 +96,10 @@
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                         <select name="ProductSize" id="ProductSize" class="form-control">
-                                            <option value="">Small</option>
-                                            <option value="">Medium</option>
-                                            <option value="">Large</option>
-                                            <option value="">Extra Large</option>
+                                            @foreach (size size in ViewBag.Size)
+                                            {
+                                                <option value="@size.size_id">@size.size_name</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -114,11 +120,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" class="btn btn-default" value="Register" />
-                            </div>
+                            <p>
+                                <input type="submit" class="btn btn-primary py-3 px-5" value="Thêm vào giỏ" />
+                            </p>
                         </div>
-                        <p><a href="cart.html" class="btn btn-primary py-3 px-5">Add to Cart</a></p>
                     </div>
                 </div>
             </div>

@@ -49,3 +49,7 @@ textarea {
 .dropdown-content option:hover {
     background-color: transparent;
 }
+
+.option:hover{
+    background-color: transparent;
+}

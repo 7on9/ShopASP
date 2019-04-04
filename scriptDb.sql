@@ -203,5 +203,19 @@ go
 insert into color values(N'Xanh lơ', '#6bf442')
 insert into color values(N'Đỏ thẫm', '#e02f26')
 
+insert into size values(1,'S')
+insert into size values(2,'M')
+insert into size values(3,'L')
+insert into size values(4,'XL')
+insert into size values(5,'XXL')
+insert into size values(6,'XXXL')
+insert into size values(38, '38')
+insert into size values(39, '39')
+insert into size values(40, '40')
+insert into size values(41, '41')
+insert into size values(42, '42')
+insert into size values(43, '43')
+insert into size values(44, '44')
+
 select * from product_img
 delete product where 1=1 
