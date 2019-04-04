@@ -1,7 +1,6 @@
 ﻿using ShopASP.Models;
 using ShopASP.Models.Utility;
 using ShopASP.Models.ViewModel;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -101,7 +100,7 @@ namespace ShopASP.Controllers
             return View(GetAllEmployee());
         }
 
-        public ActionResult CreateNewAccount()
+        public ActionResult CreateNewEmployee()
         {
             if (Session["admin"] == null)
             {
@@ -146,44 +145,52 @@ namespace ShopASP.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateNewAccount(EmployeeViewModels form)
+        public ActionResult CreateNewEmployee(EmployeeViewModels form)
         {
-            if (Session["admin"] == null)
+            if (form.Password.Equals(form.RetypePassword))
             {
-                return RedirectToAction("Login", "Admin");
+                ViewData["errorPass"] = "Mật khẩu gõ lại phải trùng khớp";
             }
-            account thisAccount = (account)Session["admin"];
-            HttpPostedFileBase file = form.ImagePath;
-            if (file != null && file.ContentLength > 0)
+            else
             {
-                string extend = Path.GetExtension(file.FileName);
-                string fileName = Utility.ComputeSha256Hash((thisAccount.account_username)) + extend;
-                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCTS), fileName);
+                if (Session["admin"] == null)
+                {
+                    return RedirectToAction("Login", "Admin");
+                }
+                account thisAccount = (account)Session["admin"];
+                HttpPostedFileBase file = form.ImagePath;
+                if (file != null && file.ContentLength > 0)
+                {
+                    string extend = Path.GetExtension(file.FileName);
+                    string fileName = Utility.ComputeSha256Hash((thisAccount.account_username)) + extend;
+                    string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCTS), fileName);
 
-                employee newEmployee = new employee();
+                    employee newEmployee = new employee();
 
-                newEmployee.employee_name = form.Name;
-                newEmployee.employee_email = form.Email;
-                newEmployee.employee_dob = form.Dob;
-                newEmployee.employee_gender = form.Gender;
-                newEmployee.employee_phone = form.Phone;
-                newEmployee.employee_address = form.Address;
+                    newEmployee.employee_name = form.Name;
+                    newEmployee.employee_email = form.Email;
+                    newEmployee.employee_dob = form.Dob;
+                    newEmployee.employee_gender = form.Gender;
+                    newEmployee.employee_phone = form.Phone;
+                    newEmployee.employee_address = form.Address;
+                    newEmployee.employee_password = Utility.ComputeSha256Hash(form.Password);
 
-                db.employees.InsertOnSubmit(newEmployee);
-                db.SubmitChanges();
-                newEmployee.employee_id = db.employees.OrderByDescending(u => u.employee_id).FirstOrDefault().employee_id;
+                    db.employees.InsertOnSubmit(newEmployee);
+                    db.SubmitChanges();
+                    newEmployee.employee_id = db.employees.OrderByDescending(u => u.employee_id).FirstOrDefault().employee_id;
 
 
-                employee_img employee_Img = new employee_img();
-                employee_Img.employee_id = newEmployee.employee_id;
-                employee_Img.employee_img_path = path;
+                    employee_img employee_Img = new employee_img();
+                    employee_Img.employee_id = newEmployee.employee_id;
+                    employee_Img.employee_img_path = Utility.CorrectPath(path);
 
-                file.SaveAs(path);
-                db.ExecuteQuery<employee_img>("insert into employee_img values ({0}, {1})", newEmployee.employee_id, path);
-                //db.customer_imgs.InsertOnSubmit(customer_Img);
-                db.SubmitChanges();
+                    file.SaveAs(path);
+                    db.ExecuteQuery<employee_img>("insert into employee_img values ({0}, {1})", newEmployee.employee_id, employee_Img.employee_img_path);
+                    //db.customer_imgs.InsertOnSubmit(customer_Img);
+                    db.SubmitChanges();
 
-                return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Index", "Admin");
+                }
             }
             return View();
 

@@ -65,7 +65,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 ftco-animate">
-                        <a href="@Model.ImagePaths[0].ImagePath" class="image-popup"><img src="@Model.ImagePaths[0].ImagePath" class="img-fluid" alt="Colorlib Template"></a>
+                        <a href="@Model.ImagePaths.ImagePath" class="image-popup"><img src="@Model.ImagePaths.ImagePath" class="img-fluid" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                         <h3>@Model.Name</h3>
@@ -77,9 +77,9 @@
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                         <select name="ProductColor" id="ProductColor" class="form-control">
-                                            @foreach (var color in Model.Colors)
+                                            @foreach(color color in ViewBag.Color)
                                             {
-                                                <option value="@color.Id" style="background-color : @color.Hex">@color.Name</option>
+                                                <option class="dropdown-content" value="@color.color_id" style="background-color : @color.color_hex">@color.color_name</option>
                                             }
                                         </select>
                                     </div>

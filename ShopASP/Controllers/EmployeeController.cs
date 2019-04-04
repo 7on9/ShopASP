@@ -91,6 +91,56 @@ namespace ShopASP.Controllers
             return customers;
         }
 
+        public List<Product> GetAllProduct()
+        {
+            var productFromDb = (from a in db.products
+                                 join b in db.product_details
+                                  on a.product_id equals b.product_id
+                                 join c in db.product_imgs
+                                  on a.product_id equals c.product_id
+                                 join d in db.colors
+                                  on c.color_id equals d.color_id
+                                 select new
+                                 {
+                                     a.product_id,
+                                     a.product_quantum,
+                                     a.product_price,
+                                     b.product_decrible,
+                                     b.product_tag,
+                                     c.color_id,
+                                     d.color_name,
+                                     d.color_hex,
+                                     b.product_name,
+                                     c.product_img_path
+                                 }).ToList();
+            Product product;
+            List<Product> products = new List<Product>();
+            for(int i = 0; i < productFromDb.Count; i++)
+            {
+                product = new Product();
+                product.Id = productFromDb[i].product_id;
+                product.Price = (float)productFromDb[i].product_price;
+                product.Quantum = (int)productFromDb[i].product_quantum;
+                product.Tag = productFromDb[i].product_tag;
+                product.Name = productFromDb[i].product_name;
+                product.Describle = productFromDb[i].product_decrible;
+
+                product.ImagePaths = new ProductImg(productFromDb[i].product_id, productFromDb[i].product_img_path, productFromDb[i].color_id);
+                product.Colors = new Color(productFromDb[i].color_id, productFromDb[i].color_name, productFromDb[i].color_hex);
+
+                products.Add(product);
+            }
+            
+            return products;
+        }
+
+        public ActionResult CreateNewProduct()
+        {
+            ViewBag.Color = db.colors.ToList();
+            return View();
+        }
+
+
         [HttpPost]
         public ActionResult CreateNewProduct(ProductViewModels form)
         {
@@ -120,13 +170,13 @@ namespace ShopASP.Controllers
 
                 product_img product_Img = new product_img();
                 product_Img.product_id = newProduct.product_id;
-                product_Img.product_img_path = path;
+                product_Img.product_img_path = Utility.CorrectPath(path);
 
                 file.SaveAs(path);
                 db.ExecuteQuery<product_detail>("Insert into product_detail " +
                     "values({0}, {1}, {2}, {3})",
                     newProduct.product_id, form.Name, form.Tag, form.Decrible);
-                db.ExecuteQuery<product_img>("insert into product_img values ({0}, {1})", newProduct.product_id, path);
+                db.ExecuteQuery<product_img>("insert into product_img values ({0}, {1}, {2})", newProduct.product_id, product_Img.product_img_path, form.ProductColor);
                 //db.customer_imgs.InsertOnSubmit(customer_Img);
                 db.SubmitChanges();
 
@@ -134,6 +184,16 @@ namespace ShopASP.Controllers
             }
             return View();
 
+        }
+
+        public ActionResult Product()
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+
+            return View(GetAllProduct());
         }
 
         public ActionResult Logout()

@@ -1,13 +1,13 @@
 ﻿@model ShopASP.Models.ViewModel.EmployeeViewModels
 
 @{
-  ViewBag.Title = "CreateNewAccount";
+  ViewBag.Title = "CreateNewEmployee";
   Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>Tạo mới tài khoản nhân viên</h2>
 
-@using (Html.BeginForm("CreateNewAccount", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("CreateNewEmployee", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
 {
     @Html.ValidationSummary(true)
 
@@ -67,6 +67,7 @@
             @Html.LabelFor(m => m.Password, new { @class = "col-md-10 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @ViewData["errorPass"]
             </div>
         </div>
 
@@ -74,6 +75,7 @@
             @Html.LabelFor(m => m.RetypePassword, new { @class = "col-md-10 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.RetypePassword, new { @class = "form-control" })
+                @ViewData["errorPass"]
             </div>
         </div>
 

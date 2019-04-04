@@ -13,7 +13,7 @@ namespace ShopASP.Models
         public float Price { set; get; }
         public string Describle { set; get; }
         public string Tag { set; get; }
-        public List<ProductImg> ImagePaths { set; get; }
-        public List<Color> Colors { set; get; }
+        public ProductImg ImagePaths { set; get; }
+        public Color Colors { set; get; }
     }
 }

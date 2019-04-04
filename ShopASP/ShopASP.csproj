@@ -135,6 +135,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\ProductImg.cs" />
     <Compile Include="Models\ViewModel\AccountViewModels.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Utility\Utility.cs" />
     <Compile Include="Models\ViewModel\AdminViewModels.cs" />
+    <Compile Include="Models\ViewModel\CartItemViewModels.cs" />
     <Compile Include="Models\ViewModel\CustomerViewModels.cs" />
     <Compile Include="Models\ViewModel\EmployeeViewModels.cs" />
     <Compile Include="Models\ViewModel\ProductViewModels.cs" />
@@ -643,7 +645,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Admin\CreateNewAccount.cshtml" />
+    <Content Include="Views\Admin\CreateNewEmployee.cshtml" />
     <Content Include="Views\Admin\Customer.cshtml" />
     <Content Include="Views\Admin\Employee.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -665,6 +667,9 @@
     <Content Include="Views\Shop\Product.cshtml" />
     <Content Include="Views\Employee\Login.cshtml" />
     <Content Include="Views\Employee\CreateNewProduct.cshtml" />
+    <Content Include="Views\Shop\Cart.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
+    <Content Include="Views\Employee\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

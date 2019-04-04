@@ -1,4 +1,4 @@
-use master
+﻿use master
 go
 drop database if exists shopasp
 go
@@ -199,3 +199,9 @@ alter table history_change_product
 	add CONSTRAINT FK_log_change_product_history_change_product
 	FOREIGN KEY (id) REFERENCES log_change_product(id) on update cascade
 go
+
+insert into color values(N'Xanh lơ', '#6bf442')
+insert into color values(N'Đỏ thẫm', '#e02f26')
+
+select * from product_img
+delete product where 1=1 

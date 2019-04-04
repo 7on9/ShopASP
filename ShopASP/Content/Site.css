@@ -30,3 +30,22 @@ textarea {
 .pdl-10{
     padding-left: 10px;
 }
+
+.dropdown-menu {
+    background-color: transparent;
+    border: transparent;
+    border: none;
+}
+
+.dropdown-menu .dropdown-item > li > a:hover {
+    background-image: none;
+    background-color: #000 !important;
+}
+
+.navbar {
+    background: none;
+}
+
+.dropdown-content option:hover {
+    background-color: transparent;
+}

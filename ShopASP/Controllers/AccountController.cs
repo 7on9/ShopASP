@@ -93,7 +93,7 @@ namespace ShopASP.Controllers
                     customer_Img.customer_img_path = Utility.CorrectPath(path);
 
                     file.SaveAs(path);
-                    db.ExecuteQuery<customer_img>("insert into customer_img values ({0}, {1})",customer.customer_id, Utility.CorrectPath(path));
+                    db.ExecuteQuery<customer_img>("insert into customer_img values ({0}, {1})",customer.customer_id, customer_Img.customer_img_path);
                     //db.customer_imgs.InsertOnSubmit(customer_Img);
                     db.SubmitChanges();
 

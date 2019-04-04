@@ -23,6 +23,9 @@ namespace ShopASP.Models.ViewModel
         [Required, Display(Name = "Tag")]
         public string Tag { set; get; }
 
+        [Required, Display(Name = "Màu sản phẩm")]
+        public int ProductColor { set; get; }
+
         [Required, Display(Name = "Hình ảnh sản phẩm")]
         public HttpPostedFileBase ImagePath { set; get; }
     }

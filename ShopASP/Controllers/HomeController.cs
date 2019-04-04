@@ -22,7 +22,8 @@ namespace ShopASP.Controllers
                                    a.product_id,
                                    a.product_price,
                                    b.product_name,
-                                   c.product_img_path
+                                   c.product_img_path,
+                                   c.color_id
                                }).ToList();
             List<Product> products = new List<Product>();
             int i = 0;
@@ -31,7 +32,7 @@ namespace ShopASP.Controllers
                 products.Add(new Product());
                 products[i].Id = product.product_id;
                 products[i].Name = product.product_name;
-                //products[i].ImagePath = product.product_img_path;
+                products[i].ImagePaths = new ProductImg(product.product_id, product.product_img_path, product.color_id);
                 products[i].Price = (float)product.product_price;
                 i++;
             }

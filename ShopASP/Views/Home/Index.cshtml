@@ -4,8 +4,6 @@
 @using ShopASP.Models
 @model IEnumerable<ShopASP.Models.Product>
 
-@*@<IdentityUser> SignInManager
-    @using UserManager<IdentityUser> UserManager*@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="../../">Gooflow</a>
@@ -84,9 +82,9 @@
                         {
                             <div class="item">
                                 <div class="product">
-                                    <a href="#" class="img-prod"><img src="@product.ImagePaths" alt="Colorlib Template"></a>
+                                    <a href="/Shop/Product/@product.Id" class="img-prod"><img src="@product.ImagePaths.ImagePath" alt="Colorlib Template"></a>
                                     <div class="text pt-3 px-3">
-                                        <h3><a href="#">@product.Name</a></h3>
+                                        <h3><a href="/Shop/Product/@product.Id">@product.Name</a></h3>
                                         <div class="d-flex">
                                             <div class="pricing">
                                                 <p class="price"><span> @product.Price.000 VNĐ</span></p>
