@@ -17,6 +17,8 @@ namespace ShopASP.Models.ViewModel
         [Required, Display(Name = "Giới tính")]
         public bool Gender { set; get; }
         [Required, Display(Name = "Ngày tháng năm sinh")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public string Dob { set; get; }
         [Display(Name = "Mật khẩu")]
         public string Password { set; get; }

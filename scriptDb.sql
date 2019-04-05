@@ -14,15 +14,14 @@ create table account(
 )
 
 go
-
 create table customer(
 	customer_id int identity(1, 1) PRIMARY KEY,
 	customer_name nvarchar(100) not null,
 	customer_dob varchar(10),
 	customer_gender bit, --0 : men --1: women
 	customer_address nvarchar(200),
-	customer_email varchar(200) not null,
-	customer_phone varchar(15) not null,
+	customer_email varchar(200) ,
+	customer_phone varchar(15),
 	customer_password nvarchar(100),
 	customer_level tinyint,
 	time_create datetime,
@@ -217,5 +216,7 @@ insert into size values(42, '42')
 insert into size values(43, '43')
 insert into size values(44, '44')
 
-select * from product_img
-delete product where 1=1 
+insert into account values('long', 'FC66F021C67D064C1490A12B5A4D4D2F5167CA692A16CA12F1F3A4CDA29A6FA9');
+
+select * from customer_img
+--delete customer_img where 1=1 

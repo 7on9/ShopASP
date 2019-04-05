@@ -41,7 +41,7 @@ namespace ShopASP.Controllers
                 );
             if (customer != null)
             {
-                Session["account"] = customer;
+                Session["customer"] = customer;
                 return RedirectToAction("Index", "Home");
             }
             ViewData["Error"] = "Đăng nhập thất bại";
@@ -58,7 +58,7 @@ namespace ShopASP.Controllers
         {
             if(Session == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "Account");
             }
             return View();
         }
@@ -66,7 +66,7 @@ namespace ShopASP.Controllers
         [HttpPost]
         public ActionResult EditInfor(CustomerViewModels form)
         { 
-            customer thisCustomer = (customer)Session["account"];
+            customer thisCustomer = (customer)Session["customer"];
             HttpPostedFileBase file = form.ImagePath;
             if(file != null && file.ContentLength > 0 )
             {
@@ -88,14 +88,27 @@ namespace ShopASP.Controllers
                     customer.last_update = DateTime.Now;
                     customer.customer_address = form.Address;
 
-                    customer_img customer_Img = new customer_img();
-                    customer_Img.customer_id = customer.customer_id;
+                    db.SubmitChanges();
+
+                    customer_img customer_Img = db.customer_imgs.SingleOrDefault(x => x.customer_id.Equals(thisCustomer.customer_id));
+                    if(customer_Img == null)
+                    {
+                        customer_Img = new customer_img();
+                    }
+
+                    customer_Img.customer_id = thisCustomer.customer_id;
                     customer_Img.customer_img_path = Utility.CorrectPath(path);
 
                     file.SaveAs(path);
-                    db.ExecuteQuery<customer_img>("insert into customer_img values ({0}, {1})",customer.customer_id, customer_Img.customer_img_path);
+                    db.ExecuteQuery<customer_img>("insert into customer_img values ({0}, {1})", customer_Img.customer_id, customer_Img.customer_img_path);
                     //db.customer_imgs.InsertOnSubmit(customer_Img);
-                    db.SubmitChanges();
+                    try
+                    {
+                        db.SubmitChanges();
+                    }
+                    catch (Exception e)
+                    {
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -182,7 +195,7 @@ namespace ShopASP.Controllers
                 customer.last_update = now;
                 db.customers.InsertOnSubmit(customer);
                 db.SubmitChanges();
-                Session["account"] = customer;
+                Session["customer"] = customer;
                 return RedirectToAction("EditInfor");
 
             }

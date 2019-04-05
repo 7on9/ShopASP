@@ -10,11 +10,11 @@ namespace ShopASP.Models
         public CartItem(Product product, int quantity)
         {
             Product = product;
-            quantity = quantity;
+            Quantity = quantity;
         }
 
         public Product Product { get; set; }
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
         
     }
 }

@@ -147,7 +147,7 @@ namespace ShopASP.Controllers
         [HttpPost]
         public ActionResult CreateNewEmployee(EmployeeViewModels form)
         {
-            if (form.Password.Equals(form.RetypePassword))
+            if (!form.Password.Equals(form.RetypePassword))
             {
                 ViewData["errorPass"] = "Mật khẩu gõ lại phải trùng khớp";
             }

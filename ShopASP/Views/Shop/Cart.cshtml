@@ -3,10 +3,12 @@
     ViewBag.Title = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var x = (Session["cart"] as List<CartItem>);
-    if(x == null)
+    if (x == null)
     {
         x = new List<CartItem>();
     }
+    float total = 0;
+    float ship = 20;
 }
 
 @using ShopASP.Models
@@ -26,18 +28,18 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" href="../../Shop">Shop</a>
                         @*<a class="dropdown-item" href="product-single.html">Single Product</a>*@
-                        <a class="dropdown-item" href="../../Home/Cart">Giỏ hàng</a>
+                        <a class="dropdown-item" href="../../Shop/Cart">Giỏ hàng</a>
                         <a class="dropdown-item" href="checkout.html">Checkout</a>
                     </div>
                 </li>
                 <li class="nav-item"><a href="../../Home/About" class="nav-link">Thông tin</a></li>
                 <li class="nav-item"><a href="../../Home/Contact" class="nav-link">Liên hệ</a></li>
-                <li class="nav-item cta cta-colored"><a href="../../Home/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
+                <li class="nav-item cta cta-colored"><a href="../../Shop/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
                 @{
-                    customer customer = (customer)Session["account"];
+                    customer customer = (customer)Session["customer"];
                 }
                 <li class="nav-item pdl-10 pdt-15px">
-                    @if (Session["account"] != null)
+                    @if (Session["customer"] != null)
                     {
                         <a href="/Account/EditInfor"> @customer.customer_name </a>
                         <a href="/Account/Logout" class="pdl-10">Đăng xuất</a>
@@ -84,40 +86,32 @@
                             {
                                 foreach (var item in Model)
                                 {
+                                    total += item.Product.Price * item.Quantity;
                                     <tbody>
+
                                         <tr class="text-center">
-                                            <td class="product-remove"><a href="/Shop/Cart/RemoveFromCart/@item.Product.Id"><span class="ion-ios-close"></span></a></td>
+
+                                            <td class="product-remove">
+                                                <a href="/Shop/RemoveFromCart/@item.Product.Id"><span class="ion-ios-close"></span></a>
+                                                <a href="/Shop/Product/@item.Product.Id"><span class="ion-ios-create"></span></a>
+                                            </td>
 
                                             <td class="image-prod">
                                                 <img class="img" src="@item.Product.ImagePaths.ImagePath" />
                                             </td>
 
                                             <td class="product-name">
-                                                <h3>@item.Product.Name</h3>
+                                                <h3>@item.Product.Name </h3>
                                                 @*<p>Far far away, behind the word mountains, far from the countries</p>*@
                                             </td>
 
                                             <td class="price">@item.Product.Price 000 VNĐ</td>
 
                                             <td class="quantity">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-btn mr-2">
-                                                        <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-                                                            <i class="ion-ios-remove"></i>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-                                                    <span class="input-group-btn ml-2">
-                                                        <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                                                            <i class="ion-ios-add"></i>
-                                                        </button>
-                                                    </span>
-
-                                                    @*      <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">*@
-                                                </div>
+                                                <h5>@item.Quantity</h5>
                                             </td>
 
-                                            <td class="total">@(item.Product.Price * item.quantity) 000 VNĐ</td>
+                                            <td class="total">@(item.Product.Price * item.Quantity) 000 VNĐ</td>
                                         </tr><!-- END TR-->
 
                                     </tbody>
@@ -138,27 +132,28 @@
                         <h3>Tổng giá trị đơn hàng</h3>
                         <p class="d-flex">
                             <span>Giá tiền tạm tính</span>
-                            <span>$20.60</span>
+                            <span>@total 000 VNĐ</span>
                         </p>
                         <p class="d-flex">
-                            <span>Tiền giao hàng</span>
-                            <span>$0.00</span>
+                            <span>Phí giao hàng</span>
+                            <span>@ship 000 VNĐ</span>
                         </p>
                         <p class="d-flex">
-                            <span>Thuế VAT (10%)</span>
-                            <span>222</span>
+                            <span>Thuế VAT (10% - không bao gồm phí giao hàng)</span>
+                            <span>@(total * 10 / 100) 000 VNĐ</span>
                         </p>
                         <hr>
                         <p class="d-flex total-price">
                             <span>Tổng cộng</span>
-                            <span>$17.60</span>
+                            <span>@(total + ship + (total * 10 / 100)) 000 VNĐ</span>
                         </p>
                     </div>
-                    <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+                    <p class="text-center"><a href="/Shop/Checkout" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
                 </div>
             </div>
         </div>
     </section>
+
 
     <section class="ftco-section bg-light">
         <div class="container">

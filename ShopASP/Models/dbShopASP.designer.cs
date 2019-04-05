@@ -48,9 +48,6 @@ namespace ShopASP.Models
     partial void Insertcolor(color instance);
     partial void Updatecolor(color instance);
     partial void Deletecolor(color instance);
-    partial void Insertcustomer(customer instance);
-    partial void Updatecustomer(customer instance);
-    partial void Deletecustomer(customer instance);
     partial void Insertemployee(employee instance);
     partial void Updateemployee(employee instance);
     partial void Deleteemployee(employee instance);
@@ -60,6 +57,9 @@ namespace ShopASP.Models
     partial void Insertproduct(product instance);
     partial void Updateproduct(product instance);
     partial void Deleteproduct(product instance);
+    partial void Insertcustomer(customer instance);
+    partial void Updatecustomer(customer instance);
+    partial void Deletecustomer(customer instance);
     #endregion
 		
 		public dbShopASPDataContext() : 
@@ -148,14 +148,6 @@ namespace ShopASP.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<customer> customers
-		{
-			get
-			{
-				return this.GetTable<customer>();
-			}
-		}
-		
 		public System.Data.Linq.Table<customer_img> customer_imgs
 		{
 			get
@@ -225,6 +217,14 @@ namespace ShopASP.Models
 			get
 			{
 				return this.GetTable<product_img>();
+			}
+		}
+		
+		public System.Data.Linq.Table<customer> customers
+		{
+			get
+			{
+				return this.GetTable<customer>();
 			}
 		}
 	}
@@ -443,9 +443,9 @@ namespace ShopASP.Models
 		
 		private EntityRef<cart> _cart;
 		
-		private EntityRef<customer> _customer;
-		
 		private EntityRef<employee> _employee;
+		
+		private EntityRef<customer> _customer;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -466,8 +466,8 @@ namespace ShopASP.Models
 		public bill()
 		{
 			this._cart = default(EntityRef<cart>);
-			this._customer = default(EntityRef<customer>);
 			this._employee = default(EntityRef<employee>);
+			this._customer = default(EntityRef<customer>);
 			OnCreated();
 		}
 		
@@ -617,40 +617,6 @@ namespace ShopASP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_bill", Storage="_customer", ThisKey="customer_id", OtherKey="customer_id", IsForeignKey=true)]
-		public customer customer
-		{
-			get
-			{
-				return this._customer.Entity;
-			}
-			set
-			{
-				customer previousValue = this._customer.Entity;
-				if (((previousValue != value) 
-							|| (this._customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._customer.Entity = null;
-						previousValue.bills.Remove(this);
-					}
-					this._customer.Entity = value;
-					if ((value != null))
-					{
-						value.bills.Add(this);
-						this._customer_id = value.customer_id;
-					}
-					else
-					{
-						this._customer_id = default(int);
-					}
-					this.SendPropertyChanged("customer");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_bill", Storage="_employee", ThisKey="employee_id", OtherKey="employee_id", IsForeignKey=true)]
 		public employee employee
 		{
@@ -681,6 +647,40 @@ namespace ShopASP.Models
 						this._employee_id = default(int);
 					}
 					this.SendPropertyChanged("employee");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_bill", Storage="_customer", ThisKey="customer_id", OtherKey="customer_id", IsForeignKey=true)]
+		public customer customer
+		{
+			get
+			{
+				return this._customer.Entity;
+			}
+			set
+			{
+				customer previousValue = this._customer.Entity;
+				if (((previousValue != value) 
+							|| (this._customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._customer.Entity = null;
+						previousValue.bills.Remove(this);
+					}
+					this._customer.Entity = value;
+					if ((value != null))
+					{
+						value.bills.Add(this);
+						this._customer_id = value.customer_id;
+					}
+					else
+					{
+						this._customer_id = default(int);
+					}
+					this.SendPropertyChanged("customer");
 				}
 			}
 		}
@@ -1142,336 +1142,6 @@ namespace ShopASP.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.customer")]
-	public partial class customer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _customer_id;
-		
-		private string _customer_name;
-		
-		private string _customer_dob;
-		
-		private System.Nullable<bool> _customer_gender;
-		
-		private string _customer_address;
-		
-		private string _customer_email;
-		
-		private string _customer_phone;
-		
-		private string _customer_password;
-		
-		private System.Nullable<byte> _customer_level;
-		
-		private System.Nullable<System.DateTime> _time_create;
-		
-		private System.Nullable<System.DateTime> _last_update;
-		
-		private EntitySet<bill> _bills;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Oncustomer_idChanging(int value);
-    partial void Oncustomer_idChanged();
-    partial void Oncustomer_nameChanging(string value);
-    partial void Oncustomer_nameChanged();
-    partial void Oncustomer_dobChanging(string value);
-    partial void Oncustomer_dobChanged();
-    partial void Oncustomer_genderChanging(System.Nullable<bool> value);
-    partial void Oncustomer_genderChanged();
-    partial void Oncustomer_addressChanging(string value);
-    partial void Oncustomer_addressChanged();
-    partial void Oncustomer_emailChanging(string value);
-    partial void Oncustomer_emailChanged();
-    partial void Oncustomer_phoneChanging(string value);
-    partial void Oncustomer_phoneChanged();
-    partial void Oncustomer_passwordChanging(string value);
-    partial void Oncustomer_passwordChanged();
-    partial void Oncustomer_levelChanging(System.Nullable<byte> value);
-    partial void Oncustomer_levelChanged();
-    partial void Ontime_createChanging(System.Nullable<System.DateTime> value);
-    partial void Ontime_createChanged();
-    partial void Onlast_updateChanging(System.Nullable<System.DateTime> value);
-    partial void Onlast_updateChanged();
-    #endregion
-		
-		public customer()
-		{
-			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int customer_id
-		{
-			get
-			{
-				return this._customer_id;
-			}
-			set
-			{
-				if ((this._customer_id != value))
-				{
-					this.Oncustomer_idChanging(value);
-					this.SendPropertyChanging();
-					this._customer_id = value;
-					this.SendPropertyChanged("customer_id");
-					this.Oncustomer_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string customer_name
-		{
-			get
-			{
-				return this._customer_name;
-			}
-			set
-			{
-				if ((this._customer_name != value))
-				{
-					this.Oncustomer_nameChanging(value);
-					this.SendPropertyChanging();
-					this._customer_name = value;
-					this.SendPropertyChanged("customer_name");
-					this.Oncustomer_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_dob", DbType="VarChar(10)")]
-		public string customer_dob
-		{
-			get
-			{
-				return this._customer_dob;
-			}
-			set
-			{
-				if ((this._customer_dob != value))
-				{
-					this.Oncustomer_dobChanging(value);
-					this.SendPropertyChanging();
-					this._customer_dob = value;
-					this.SendPropertyChanged("customer_dob");
-					this.Oncustomer_dobChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_gender", DbType="Bit")]
-		public System.Nullable<bool> customer_gender
-		{
-			get
-			{
-				return this._customer_gender;
-			}
-			set
-			{
-				if ((this._customer_gender != value))
-				{
-					this.Oncustomer_genderChanging(value);
-					this.SendPropertyChanging();
-					this._customer_gender = value;
-					this.SendPropertyChanged("customer_gender");
-					this.Oncustomer_genderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_address", DbType="NVarChar(200)")]
-		public string customer_address
-		{
-			get
-			{
-				return this._customer_address;
-			}
-			set
-			{
-				if ((this._customer_address != value))
-				{
-					this.Oncustomer_addressChanging(value);
-					this.SendPropertyChanging();
-					this._customer_address = value;
-					this.SendPropertyChanged("customer_address");
-					this.Oncustomer_addressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_email", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string customer_email
-		{
-			get
-			{
-				return this._customer_email;
-			}
-			set
-			{
-				if ((this._customer_email != value))
-				{
-					this.Oncustomer_emailChanging(value);
-					this.SendPropertyChanging();
-					this._customer_email = value;
-					this.SendPropertyChanged("customer_email");
-					this.Oncustomer_emailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_phone", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
-		public string customer_phone
-		{
-			get
-			{
-				return this._customer_phone;
-			}
-			set
-			{
-				if ((this._customer_phone != value))
-				{
-					this.Oncustomer_phoneChanging(value);
-					this.SendPropertyChanging();
-					this._customer_phone = value;
-					this.SendPropertyChanged("customer_phone");
-					this.Oncustomer_phoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_password", DbType="NVarChar(100)")]
-		public string customer_password
-		{
-			get
-			{
-				return this._customer_password;
-			}
-			set
-			{
-				if ((this._customer_password != value))
-				{
-					this.Oncustomer_passwordChanging(value);
-					this.SendPropertyChanging();
-					this._customer_password = value;
-					this.SendPropertyChanged("customer_password");
-					this.Oncustomer_passwordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_level", DbType="TinyInt")]
-		public System.Nullable<byte> customer_level
-		{
-			get
-			{
-				return this._customer_level;
-			}
-			set
-			{
-				if ((this._customer_level != value))
-				{
-					this.Oncustomer_levelChanging(value);
-					this.SendPropertyChanging();
-					this._customer_level = value;
-					this.SendPropertyChanged("customer_level");
-					this.Oncustomer_levelChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time_create", DbType="DateTime")]
-		public System.Nullable<System.DateTime> time_create
-		{
-			get
-			{
-				return this._time_create;
-			}
-			set
-			{
-				if ((this._time_create != value))
-				{
-					this.Ontime_createChanging(value);
-					this.SendPropertyChanging();
-					this._time_create = value;
-					this.SendPropertyChanged("time_create");
-					this.Ontime_createChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_last_update", DbType="DateTime")]
-		public System.Nullable<System.DateTime> last_update
-		{
-			get
-			{
-				return this._last_update;
-			}
-			set
-			{
-				if ((this._last_update != value))
-				{
-					this.Onlast_updateChanging(value);
-					this.SendPropertyChanging();
-					this._last_update = value;
-					this.SendPropertyChanged("last_update");
-					this.Onlast_updateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_bill", Storage="_bills", ThisKey="customer_id", OtherKey="customer_id")]
-		public EntitySet<bill> bills
-		{
-			get
-			{
-				return this._bills;
-			}
-			set
-			{
-				this._bills.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_bills(bill entity)
-		{
-			this.SendPropertyChanging();
-			entity.customer = this;
-		}
-		
-		private void detach_bills(bill entity)
-		{
-			this.SendPropertyChanging();
-			entity.customer = null;
 		}
 	}
 	
@@ -2442,6 +2112,336 @@ namespace ShopASP.Models
 					this._color_id = value;
 				}
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.customer")]
+	public partial class customer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _customer_id;
+		
+		private string _customer_name;
+		
+		private string _customer_dob;
+		
+		private System.Nullable<bool> _customer_gender;
+		
+		private string _customer_address;
+		
+		private string _customer_email;
+		
+		private string _customer_phone;
+		
+		private string _customer_password;
+		
+		private System.Nullable<byte> _customer_level;
+		
+		private System.Nullable<System.DateTime> _time_create;
+		
+		private System.Nullable<System.DateTime> _last_update;
+		
+		private EntitySet<bill> _bills;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Oncustomer_idChanging(int value);
+    partial void Oncustomer_idChanged();
+    partial void Oncustomer_nameChanging(string value);
+    partial void Oncustomer_nameChanged();
+    partial void Oncustomer_dobChanging(string value);
+    partial void Oncustomer_dobChanged();
+    partial void Oncustomer_genderChanging(System.Nullable<bool> value);
+    partial void Oncustomer_genderChanged();
+    partial void Oncustomer_addressChanging(string value);
+    partial void Oncustomer_addressChanged();
+    partial void Oncustomer_emailChanging(string value);
+    partial void Oncustomer_emailChanged();
+    partial void Oncustomer_phoneChanging(string value);
+    partial void Oncustomer_phoneChanged();
+    partial void Oncustomer_passwordChanging(string value);
+    partial void Oncustomer_passwordChanged();
+    partial void Oncustomer_levelChanging(System.Nullable<byte> value);
+    partial void Oncustomer_levelChanged();
+    partial void Ontime_createChanging(System.Nullable<System.DateTime> value);
+    partial void Ontime_createChanged();
+    partial void Onlast_updateChanging(System.Nullable<System.DateTime> value);
+    partial void Onlast_updateChanged();
+    #endregion
+		
+		public customer()
+		{
+			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int customer_id
+		{
+			get
+			{
+				return this._customer_id;
+			}
+			set
+			{
+				if ((this._customer_id != value))
+				{
+					this.Oncustomer_idChanging(value);
+					this.SendPropertyChanging();
+					this._customer_id = value;
+					this.SendPropertyChanged("customer_id");
+					this.Oncustomer_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string customer_name
+		{
+			get
+			{
+				return this._customer_name;
+			}
+			set
+			{
+				if ((this._customer_name != value))
+				{
+					this.Oncustomer_nameChanging(value);
+					this.SendPropertyChanging();
+					this._customer_name = value;
+					this.SendPropertyChanged("customer_name");
+					this.Oncustomer_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_dob", DbType="VarChar(10)")]
+		public string customer_dob
+		{
+			get
+			{
+				return this._customer_dob;
+			}
+			set
+			{
+				if ((this._customer_dob != value))
+				{
+					this.Oncustomer_dobChanging(value);
+					this.SendPropertyChanging();
+					this._customer_dob = value;
+					this.SendPropertyChanged("customer_dob");
+					this.Oncustomer_dobChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_gender", DbType="Bit")]
+		public System.Nullable<bool> customer_gender
+		{
+			get
+			{
+				return this._customer_gender;
+			}
+			set
+			{
+				if ((this._customer_gender != value))
+				{
+					this.Oncustomer_genderChanging(value);
+					this.SendPropertyChanging();
+					this._customer_gender = value;
+					this.SendPropertyChanged("customer_gender");
+					this.Oncustomer_genderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_address", DbType="NVarChar(200)")]
+		public string customer_address
+		{
+			get
+			{
+				return this._customer_address;
+			}
+			set
+			{
+				if ((this._customer_address != value))
+				{
+					this.Oncustomer_addressChanging(value);
+					this.SendPropertyChanging();
+					this._customer_address = value;
+					this.SendPropertyChanged("customer_address");
+					this.Oncustomer_addressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_email", DbType="VarChar(200)")]
+		public string customer_email
+		{
+			get
+			{
+				return this._customer_email;
+			}
+			set
+			{
+				if ((this._customer_email != value))
+				{
+					this.Oncustomer_emailChanging(value);
+					this.SendPropertyChanging();
+					this._customer_email = value;
+					this.SendPropertyChanged("customer_email");
+					this.Oncustomer_emailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_phone", DbType="VarChar(15)")]
+		public string customer_phone
+		{
+			get
+			{
+				return this._customer_phone;
+			}
+			set
+			{
+				if ((this._customer_phone != value))
+				{
+					this.Oncustomer_phoneChanging(value);
+					this.SendPropertyChanging();
+					this._customer_phone = value;
+					this.SendPropertyChanged("customer_phone");
+					this.Oncustomer_phoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_password", DbType="NVarChar(100)")]
+		public string customer_password
+		{
+			get
+			{
+				return this._customer_password;
+			}
+			set
+			{
+				if ((this._customer_password != value))
+				{
+					this.Oncustomer_passwordChanging(value);
+					this.SendPropertyChanging();
+					this._customer_password = value;
+					this.SendPropertyChanged("customer_password");
+					this.Oncustomer_passwordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_level", DbType="TinyInt")]
+		public System.Nullable<byte> customer_level
+		{
+			get
+			{
+				return this._customer_level;
+			}
+			set
+			{
+				if ((this._customer_level != value))
+				{
+					this.Oncustomer_levelChanging(value);
+					this.SendPropertyChanging();
+					this._customer_level = value;
+					this.SendPropertyChanged("customer_level");
+					this.Oncustomer_levelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time_create", DbType="DateTime")]
+		public System.Nullable<System.DateTime> time_create
+		{
+			get
+			{
+				return this._time_create;
+			}
+			set
+			{
+				if ((this._time_create != value))
+				{
+					this.Ontime_createChanging(value);
+					this.SendPropertyChanging();
+					this._time_create = value;
+					this.SendPropertyChanged("time_create");
+					this.Ontime_createChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_last_update", DbType="DateTime")]
+		public System.Nullable<System.DateTime> last_update
+		{
+			get
+			{
+				return this._last_update;
+			}
+			set
+			{
+				if ((this._last_update != value))
+				{
+					this.Onlast_updateChanging(value);
+					this.SendPropertyChanging();
+					this._last_update = value;
+					this.SendPropertyChanged("last_update");
+					this.Onlast_updateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_bill", Storage="_bills", ThisKey="customer_id", OtherKey="customer_id")]
+		public EntitySet<bill> bills
+		{
+			get
+			{
+				return this._bills;
+			}
+			set
+			{
+				this._bills.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_bills(bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.customer = this;
+		}
+		
+		private void detach_bills(bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.customer = null;
 		}
 	}
 }

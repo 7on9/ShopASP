@@ -70,15 +70,25 @@ namespace ShopASP.Controllers
             CartItem item = carts.Find(m => m.Product.Id == int.Parse(cartItem["IdProduct"]));
             if(item != null)
             {
-                item.quantity += int.Parse(cartItem["quantity"]);
+                item.Quantity = int.Parse(cartItem["quantity"]);
             }
             else
             {
                 carts.Add(new CartItem(
-                    GetProduct(
-                        int.Parse(cartItem["IdProduct"])), 
-                        int.Parse(cartItem["quantity"])));
+                    GetProduct(int.Parse(cartItem["IdProduct"])), 
+                    int.Parse(cartItem["quantity"])));
                 Session["cart"] = carts;
+            }
+            return RedirectToAction("Cart", "Shop", carts);
+        }
+
+        public ActionResult RemoveFromCart(int id)
+        {
+            List<CartItem> carts = Session["cart"] == null ? (new List<CartItem>()) : (List<CartItem>)Session["cart"];
+            CartItem item = carts.Find(m => m.Product.Id == id);
+            if (item != null)
+            {
+                carts.Remove(item);
             }
             return RedirectToAction("Cart", "Shop", carts);
         }
@@ -86,6 +96,15 @@ namespace ShopASP.Controllers
         public ActionResult Cart()
         {
             return View(Session["cart"] == null ? (new List<CartItem>()) : (List<CartItem>)Session["cart"]);
+        }
+
+        public ActionResult CheckOut()
+        {
+            if (Session["customer"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
         }
 
     }
