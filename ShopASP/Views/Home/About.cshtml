@@ -10,26 +10,26 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="../../">Gooflow</a>
+        <a class="navbar-brand" href="/">Gooflow</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="../../" class="nav-link">Trang chủ</a></li>
+                <li class="nav-item"><a href="/" class="nav-link">Trang chủ</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="../../Shop" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" href="/Shop" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="../../Shop">Shop</a>
+                        <a class="dropdown-item" href="/Shop">Shop</a>
                         @*<a class="dropdown-item" href="product-single.html">Single Product</a>*@
-                        <a class="dropdown-item" href="../../Shop/Cart">Giỏ hàng</a>
-                        <a class="dropdown-item" href="checkout.html">Checkout</a>
+                        <a class="dropdown-item" href="/Shop/Cart">Giỏ hàng</a>
+                        <a class="dropdown-item" href="/Shop/Checkout">Thanh toán</a>
                     </div>
                 </li>
                 <li class="nav-item active"><a href="#" class="nav-link">Thông tin</a></li>
-                <li class="nav-item"><a href="../../Home/Contact" class="nav-link">Liên hệ</a></li>
-                <li class="nav-item cta cta-colored"><a href="../../Shop/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
+                <li class="nav-item"><a href="/Home/Contact" class="nav-link">Liên hệ</a></li>
+                <li class="nav-item cta cta-colored"><a href="/Shop/Cart" class="nav-link"><span class="icon-shopping_cart"></span>[@x.Count]</a></li>
                 @{
                     customer customer = (customer)Session["customer"];
                 }
@@ -41,7 +41,7 @@
                     }
                     else
                     {
-                    <li class="nav-item"><a href="../../Account/Login" class="nav-link">Đăng nhập</a></li>
+                    <li class="nav-item"><a href="/Account/Login" class="nav-link">Đăng nhập</a></li>
                 }
                     </li>
                 </ul>
@@ -50,12 +50,12 @@
 </nav>
 <!-- END nav -->
 
-<div class="hero-wrap hero-bread" style="background-image: url(../../Content/images/bg_6.jpg);">
+<div class="hero-wrap hero-bread" style="background-image: url(/Content/images/bg_6.jpg);">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
                 <h1 class="mb-0 bread">Thông tin shop</h1>
-                <p class="breadcrumbs"><span class="mr-2"><a href="../../">Trang chủ</a></span> <span>Thông tin</span></p>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">Trang chủ</a></span> <span>Thông tin</span></p>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
 <section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
     <div class="container">
         <div class="row">
-            <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../../Content/images/bg_2.jpg);">
+            <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(/Content/images/bg_2.jpg);">
                 <a href="https://vimeo.com/45830194" class="icon popup-vimeo d-flex justify-content-center align-items-center">
                     <span class="icon-play"></span>
                 </a>
@@ -99,7 +99,7 @@
                         <div class="carousel-testimony owl-carousel ftco-owl">
                             <div class="item">
                                 <div class="testimony-wrap py-4 pb-5">
-                                    <div class="user-img mb-4" style="background-image: url(../../Content/images/person_1.jpg)">
+                                    <div class="user-img mb-4" style="background-image: url(/Content/images/person_1.jpg)">
                                         <span class="quote d-flex align-items-center justify-content-center">
                                             <i class="icon-quote-left"></i>
                                         </span>
@@ -107,13 +107,13 @@
                                     <div class="text text-center">
                                         <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
                                         <p class="name">Roger Scott</p>
-                                        <span class="position">Customer</span>
+                                        <span class="position">Khách hàng</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimony-wrap py-4 pb-5">
-                                    <div class="user-img mb-4" style="background-image: url(../../Content/images/person_2.jpg)">
+                                    <div class="user-img mb-4" style="background-image: url(/Content/images/person_2.jpg)">
                                         <span class="quote d-flex align-items-center justify-content-center">
                                             <i class="icon-quote-left"></i>
                                         </span>
@@ -121,13 +121,13 @@
                                     <div class="text text-center">
                                         <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
                                         <p class="name">Roger Scott</p>
-                                        <span class="position">Customer</span>
+                                        <span class="position">Khách hàng</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimony-wrap py-4 pb-5">
-                                    <div class="user-img mb-4" style="background-image: url(../../Content/images/person_3.jpg)">
+                                    <div class="user-img mb-4" style="background-image: url(/Content/images/person_3.jpg)">
                                         <span class="quote d-flex align-items-center justify-content-center">
                                             <i class="icon-quote-left"></i>
                                         </span>
@@ -135,13 +135,13 @@
                                     <div class="text text-center">
                                         <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
                                         <p class="name">Roger Scott</p>
-                                        <span class="position">Customer</span>
+                                        <span class="position">Khách hàng</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimony-wrap py-4 pb-5">
-                                    <div class="user-img mb-4" style="background-image: url(../../Content/images/person_1.jpg)">
+                                    <div class="user-img mb-4" style="background-image: url(/Content/images/person_1.jpg)">
                                         <span class="quote d-flex align-items-center justify-content-center">
                                             <i class="icon-quote-left"></i>
                                         </span>
@@ -149,13 +149,13 @@
                                     <div class="text text-center">
                                         <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
                                         <p class="name">Roger Scott</p>
-                                        <span class="position">Customer</span>
+                                        <span class="position">Khách hàng</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimony-wrap py-4 pb-5">
-                                    <div class="user-img mb-4" style="background-image: url(../../Content/images/person_1.jpg)">
+                                    <div class="user-img mb-4" style="background-image: url(/Content/images/person_1.jpg)">
                                         <span class="quote d-flex align-items-center justify-content-center">
                                             <i class="icon-quote-left"></i>
                                         </span>
@@ -163,7 +163,7 @@
                                     <div class="text text-center">
                                         <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
                                         <p class="name">Roger Scott</p>
-                                        <span class="position">Customer</span>
+                                        <span class="position">Khách hàng</span>
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
 </section>
 
 
-<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(../../Content/images/bg_4.jpg);">
+<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(/Content/images/bg_4.jpg);">
     <div class="container">
         <div class="row justify-content-center py-5">
             <div class="col-md-10">

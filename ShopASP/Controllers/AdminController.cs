@@ -72,6 +72,7 @@ namespace ShopASP.Controllers
 
             return employees;
         }
+
         // GET: Admin
         public ActionResult Index()
         {
