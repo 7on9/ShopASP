@@ -38,6 +38,7 @@ namespace ShopASP.Controllers
                 customers[i].Email = customer.customer_email;
                 customers[i].Phone = customer.customer_phone;
                 customers[i].Dob = customer.customer_dob;
+                i++;
             }
 
             return customers;
@@ -68,9 +69,53 @@ namespace ShopASP.Controllers
                 employees[i].Email = employee.employee_email;
                 employees[i].Phone = employee.employee_phone;
                 employees[i].Dob = employee.employee_dob;
+                i++;
             }
 
             return employees;
+        }
+
+        public List<Product> GetAllProduct()
+        {
+            var productFromDb = (from a in db.products
+                                 join b in db.product_details
+                                  on a.product_id equals b.product_id
+                                 join c in db.product_imgs
+                                  on a.product_id equals c.product_id
+                                 join d in db.colors
+                                  on c.color_id equals d.color_id
+                                 select new
+                                 {
+                                     a.product_id,
+                                     a.product_quantum,
+                                     a.product_price,
+                                     b.product_decrible,
+                                     b.product_tag,
+                                     c.color_id,
+                                     d.color_name,
+                                     d.color_hex,
+                                     b.product_name,
+                                     c.product_img_path
+                                 }).ToList();
+            Product product;
+            List<Product> products = new List<Product>();
+            for (int i = 0; i < productFromDb.Count; i++)
+            {
+                product = new Product();
+                product.Id = productFromDb[i].product_id;
+                product.Price = (float)productFromDb[i].product_price;
+                product.Quantum = (int)productFromDb[i].product_quantum;
+                product.Tag = productFromDb[i].product_tag;
+                product.Name = productFromDb[i].product_name;
+                product.Describle = productFromDb[i].product_decrible;
+
+                product.ImagePaths = new ProductImg(productFromDb[i].product_id, productFromDb[i].product_img_path, productFromDb[i].color_id);
+                product.Colors = new Color(productFromDb[i].color_id, productFromDb[i].color_name, productFromDb[i].color_hex);
+
+                products.Add(product);
+            }
+
+            return products;
         }
 
         // GET: Admin
@@ -80,6 +125,9 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Admin");
             }
+            ViewBag.Customers = GetAllCustomer();
+            ViewBag.Employees = GetAllEmployee();
+            ViewBag.Products = GetAllProduct();
             return View();
         }
 

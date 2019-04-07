@@ -124,14 +124,6 @@ namespace ShopASP.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<cart_detail> cart_details
-		{
-			get
-			{
-				return this.GetTable<cart_detail>();
-			}
-		}
-		
 		public System.Data.Linq.Table<category> categories
 		{
 			get
@@ -225,6 +217,14 @@ namespace ShopASP.Models
 			get
 			{
 				return this.GetTable<customer>();
+			}
+		}
+		
+		public System.Data.Linq.Table<cart_detail> cart_details
+		{
+			get
+			{
+				return this.GetTable<cart_detail>();
 			}
 		}
 	}
@@ -841,87 +841,6 @@ namespace ShopASP.Models
 		{
 			this.SendPropertyChanging();
 			entity.cart = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.cart_detail")]
-	public partial class cart_detail
-	{
-		
-		private int _cart_id;
-		
-		private int _product_id;
-		
-		private int _quantum;
-		
-		private int _size_id;
-		
-		public cart_detail()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_id", DbType="Int NOT NULL")]
-		public int cart_id
-		{
-			get
-			{
-				return this._cart_id;
-			}
-			set
-			{
-				if ((this._cart_id != value))
-				{
-					this._cart_id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_product_id", DbType="Int NOT NULL")]
-		public int product_id
-		{
-			get
-			{
-				return this._product_id;
-			}
-			set
-			{
-				if ((this._product_id != value))
-				{
-					this._product_id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantum", DbType="Int NOT NULL")]
-		public int quantum
-		{
-			get
-			{
-				return this._quantum;
-			}
-			set
-			{
-				if ((this._quantum != value))
-				{
-					this._quantum = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_size_id", DbType="Int NOT NULL")]
-		public int size_id
-		{
-			get
-			{
-				return this._size_id;
-			}
-			set
-			{
-				if ((this._size_id != value))
-				{
-					this._size_id = value;
-				}
-			}
 		}
 	}
 	
@@ -2442,6 +2361,105 @@ namespace ShopASP.Models
 		{
 			this.SendPropertyChanging();
 			entity.customer = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.cart_detail")]
+	public partial class cart_detail
+	{
+		
+		private int _cart_id;
+		
+		private int _product_id;
+		
+		private int _quantum;
+		
+		private int _size_id;
+		
+		private int _color_id;
+		
+		public cart_detail()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_id", DbType="Int NOT NULL")]
+		public int cart_id
+		{
+			get
+			{
+				return this._cart_id;
+			}
+			set
+			{
+				if ((this._cart_id != value))
+				{
+					this._cart_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_product_id", DbType="Int NOT NULL")]
+		public int product_id
+		{
+			get
+			{
+				return this._product_id;
+			}
+			set
+			{
+				if ((this._product_id != value))
+				{
+					this._product_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantum", DbType="Int NOT NULL")]
+		public int quantum
+		{
+			get
+			{
+				return this._quantum;
+			}
+			set
+			{
+				if ((this._quantum != value))
+				{
+					this._quantum = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_size_id", DbType="Int NOT NULL")]
+		public int size_id
+		{
+			get
+			{
+				return this._size_id;
+			}
+			set
+			{
+				if ((this._size_id != value))
+				{
+					this._size_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_color_id", DbType="Int NOT NULL")]
+		public int color_id
+		{
+			get
+			{
+				return this._color_id;
+			}
+			set
+			{
+				if ((this._color_id != value))
+				{
+					this._color_id = value;
+				}
+			}
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="shopasp" Class="dbShopASPDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-KQQVR1I\SQLBAMBOO;Initial Catalog=shopasp;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="shopaspConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-J9I0345\SQLEXPRESS;Initial Catalog=shopasp;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="shopaspConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.account" Member="accounts">
     <Type Name="account">
       <Column Name="account_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -34,17 +34,6 @@
       <Column Name="cart_status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="cart_bill" Member="bills" ThisKey="cart_id" OtherKey="cart_id" Type="bill" />
       <Association Name="cart_cart_detail" Member="cart_details" ThisKey="cart_id" OtherKey="cart_id" Type="cart_detail" />
-    </Type>
-  </Table>
-  <Table Name="dbo.cart_detail" Member="cart_details">
-    <Type Name="cart_detail">
-      <Column Name="cart_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="quantum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="size_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="cart_cart_detail" Member="cart" ThisKey="cart_id" OtherKey="cart_id" Type="cart" IsForeignKey="true" />
-      <Association Name="size_cart_detail" Member="size" ThisKey="size_id" OtherKey="size_id" Type="size" IsForeignKey="true" />
-      <Association Name="product_cart_detail" Member="product" ThisKey="product_id" OtherKey="product_id" Type="product" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.category" Member="categories">
@@ -121,10 +110,10 @@
       <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="product_quantum" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="product_price" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="product_cart_detail" Member="cart_details" ThisKey="product_id" OtherKey="product_id" Type="cart_detail" />
       <Association Name="product_log_change_product" Member="log_change_products" ThisKey="product_id" OtherKey="product_id" Type="log_change_product" />
       <Association Name="product_product_detail" Member="product_details" ThisKey="product_id" OtherKey="product_id" Type="product_detail" />
       <Association Name="product_product_img" Member="product_imgs" ThisKey="product_id" OtherKey="product_id" Type="product_img" />
+      <Association Name="product_cart_detail" Member="cart_details" ThisKey="product_id" OtherKey="product_id" Type="cart_detail" />
     </Type>
   </Table>
   <Table Name="dbo.product_detail" Member="product_details">
@@ -160,6 +149,18 @@
       <Column Name="last_update" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="customer_bill" Member="bills" ThisKey="customer_id" OtherKey="customer_id" Type="bill" />
       <Association Name="customer_customer_img" Member="customer_imgs" ThisKey="customer_id" OtherKey="customer_id" Type="customer_img" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cart_detail" Member="cart_details">
+    <Type Name="cart_detail">
+      <Column Name="cart_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantum" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="size_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="color_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="cart_cart_detail" Member="cart" ThisKey="cart_id" OtherKey="cart_id" Type="cart" IsForeignKey="true" />
+      <Association Name="product_cart_detail" Member="product" ThisKey="product_id" OtherKey="product_id" Type="product" IsForeignKey="true" />
+      <Association Name="size_cart_detail" Member="size" ThisKey="size_id" OtherKey="size_id" Type="size" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -4,10 +4,28 @@
 }
 
 @model IEnumerable<ShopASP.Models.Customer>
+@using ShopASP.Models
+@{ 
+    List<Customer> customers = ((List<Customer>)ViewBag.Customers);
+    if(customers == null)
+    {
+        customers = new List<Customer>();
+    }
+    List<Employee> employees = ((List<Employee>)ViewBag.Employees);
+    if (employees == null)
+    {
+        employees = new List<Employee>();
+    }
+    List<Product> products = ((List<Product>)ViewBag.Products);
+    if (products == null)
+    {
+        products = new List<Product>();
+    }
+}
 
 <!-- MAIN CONTENT-->
 <div class="container-fluid">
-    <div class="row">
+    @*<div class="row">
         <div class="col-md-12">
             <div class="overview-wrap">
                 <h2 class="title-1">overview</h2>
@@ -16,7 +34,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="row m-t-25">
         <div class="col-sm-6 col-lg-3">
             <div class="overview-item overview-item--c1">
@@ -26,12 +44,30 @@
                             <i class="zmdi zmdi-account-o"></i>
                         </div>
                         <div class="text">
-                            <h2>10368</h2>
-                            <span>members online</span>
+                            <h2>@customers.Count</h2>
+                            <span>Khách hàng</span>
                         </div>
                     </div>
                     <div class="overview-chart">
                         <canvas id="widgetChart1"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="overview-item overview-item--c3">
+                <div class="overview__inner">
+                    <div class="overview-box clearfix">
+                        <div class="icon">
+                            <i class="zmdi zmdi-face"></i>
+                        </div>
+                        <div class="text">
+                            <h2>@employees.Count</h2>
+                            <span>Nhân viên</span>
+                        </div>
+                    </div>
+                    <div class="overview-chart">
+                        <canvas id="widgetChart3"></canvas>
                     </div>
                 </div>
             </div>
@@ -44,8 +80,8 @@
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </div>
                         <div class="text">
-                            <h2>388,688</h2>
-                            <span>items solid</span>
+                            <h2>@products.Count</h2>
+                            <span>Sản phẩm</span>
                         </div>
                     </div>
                     <div class="overview-chart">
@@ -54,24 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="overview-item overview-item--c3">
-                <div class="overview__inner">
-                    <div class="overview-box clearfix">
-                        <div class="icon">
-                            <i class="zmdi zmdi-calendar-note"></i>
-                        </div>
-                        <div class="text">
-                            <h2>1,086</h2>
-                            <span>this week</span>
-                        </div>
-                    </div>
-                    <div class="overview-chart">
-                        <canvas id="widgetChart3"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="col-sm-6 col-lg-3">
             <div class="overview-item overview-item--c4">
                 <div class="overview__inner">
@@ -81,7 +100,7 @@
                         </div>
                         <div class="text">
                             <h2>$1,060,386</h2>
-                            <span>total earnings</span>
+                            <span>Tổng thu</span>
                         </div>
                     </div>
                     <div class="overview-chart">
@@ -158,17 +177,17 @@
     <!-- Item -->
     <div class="row">
         <div class="col-lg-12">
-            <h2 class="title-1 m-b-25">Earnings By Items</h2>
+            <h2 class="title-1 m-b-25">Hóa đơn gần đây</h2>
             <div class="table-responsive table--no-card m-b-40">
                 <table class="table table-borderless table-striped table-earning">
                     <thead>
                         <tr>
-                            <th>date</th>
-                            <th>order ID</th>
-                            <th>name</th>
-                            <th class="text-right">price</th>
-                            <th class="text-right">quantity</th>
-                            <th class="text-right">total</th>
+                            <th>Ngày</th>
+                            <th>Mã đơn</th>
+                            <th>Tên hàng</th>
+                            <th class="text-right">Giá</th>
+                            <th class="text-right">Số lượng</th>
+                            <th class="text-right">Thành tiền</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -97,7 +97,8 @@ create table cart_detail(
 	cart_id int not null,
 	product_id int not null,
 	quantum int not null,
-	size_id int not null
+	size_id int not null,
+	color_id int not null
 )
 
 create table bill(

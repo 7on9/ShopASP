@@ -1,4 +1,5 @@
 ﻿using ShopASP.Models;
+using ShopASP.Models.Utility;
 using ShopASP.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,9 @@ namespace ShopASP.Controllers
             {
                 carts.Add(new CartItem(
                     GetProduct(int.Parse(cartItem["IdProduct"])), 
-                    int.Parse(cartItem["quantity"])));
+                    int.Parse(cartItem["quantity"]),
+                    int.Parse(cartItem["color"]),
+                    int.Parse(cartItem["size"])));
                 Session["cart"] = carts;
             }
             return RedirectToAction("Cart", "Shop", carts);
@@ -107,5 +110,45 @@ namespace ShopASP.Controllers
             return View();
         }
 
+        public ActionResult Thanks(FormCollection form)
+        {
+            if (Session["customer"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            List<CartItem> cart = Session["cart"] as List<CartItem>;
+            cart = cart == null ? new List<CartItem>() : cart;
+
+            cart newCart = new cart();
+            try
+            {
+                db.ExecuteQuery<cart>("insert into cart values({0}, {1})",
+                Utility.getNowToSQLDateTime(),
+                0);
+            }
+            catch (Exception e){}
+            
+            //0 = chưa xử lý - 1 =  đã xử lý
+            db.SubmitChanges();
+            int cartId = db.carts.OrderByDescending(u => u.cart_id).FirstOrDefault().cart_id;
+            foreach (CartItem item in cart)
+            {
+                cart_detail cart_Detail = new cart_detail();
+                cart_Detail.cart_id = cartId;
+                cart_Detail.product_id = item.Product.Id;
+                cart_Detail.quantum = item.Quantity;
+                cart_Detail.size_id = item.Size;
+                cart_Detail.color_id = item.Color;
+                db.ExecuteQuery<cart_detail>("insert into cart_detail values({0}, {1}, {2}, {3}, {4})",
+                    cart_Detail.cart_id,
+                    cart_Detail.product_id,
+                    cart_Detail.quantum,
+                    cart_Detail.size_id,
+                    cart_Detail.color_id);
+                db.SubmitChanges();
+            }
+            
+            return View();
+        }
     }
 }

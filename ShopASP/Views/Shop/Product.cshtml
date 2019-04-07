@@ -26,7 +26,7 @@
                         <a class="dropdown-item" href="/Shop">Shop</a>
                         @*<a class="dropdown-item" href="product-single.html">Single Product</a>*@
                         <a class="dropdown-item" href="/Shop/Cart">Giỏ hàng</a>
-                        <a class="dropdown-item" href="/Shop/Checkout">Thanh toán</a>
+                        <a class="dropdown-item" href="/Shop/Checkout">Thanh toán </a>
                     </div>
                 </li>
                 <li class="nav-item"><a href="/Home/About" class="nav-link">Thông tin</a></li>
@@ -81,7 +81,7 @@
                                 <div class="form-group d-flex">
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="ProductColor" id="ProductColor" class="form-control">
+                                        <select name="color" id="color" class="form-control">
                                             @foreach(color color in ViewBag.Color)
                                             {
                                                 <option class="dropdown-content" value="@color.color_id" style="background-color : @color.color_hex">@color.color_name</option>
@@ -94,7 +94,7 @@
                                 <div class="form-group d-flex">
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="ProductSize" id="ProductSize" class="form-control">
+                                        <select name="size" id="size" class="form-control">
                                             @foreach (size size in ViewBag.Size)
                                             {
                                                 <option value="@size.size_id">@size.size_name</option>

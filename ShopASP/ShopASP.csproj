@@ -671,6 +671,7 @@
     <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
     <Content Include="Views\Employee\Product.cshtml" />
     <Content Include="Views\Shop\CheckOut.cshtml" />
+    <Content Include="Views\Shop\Thanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
