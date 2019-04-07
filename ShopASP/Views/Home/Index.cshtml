@@ -1,13 +1,19 @@
-﻿@{
+﻿@using ShopASP.Models
+@model IEnumerable<ShopASP.Models.Product>
+@{
     ViewData["Title"] = "Home Page";
     var x = (Session["cart"] as List<CartItem>);
+    var top5Products = (ViewBag.Top5 as List<Product>);
     if (x == null)
     {
         x = new List<CartItem>();
     }
+    if (top5Products == null)
+    {
+        top5Products = new List<Product>();
+    }
 }
-@using ShopASP.Models
-@model IEnumerable<ShopASP.Models.Product>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -38,24 +44,25 @@
                     @if (Session["customer"] != null)
                     {
                         <a href="/Account/EditInfor"> @customer.customer_name </a>
+
                         <a href="/Account/Logout" class="pdl-10">&nbsp;Đăng xuất</a>
                     }
                     else
                     {
                     <li class="nav-item"><a href="/Account/Login" class="nav-link">Đăng nhập</a></li>
-                    }
-                </li>
-            </ul>
+                }
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
     <!-- END nav -->
 
     <div class="hero-wrap js-fullheight" style="background-image: url('/Content/images/bg_1.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
-                <h3 class="v">Gooflow - Cùng mua giày chất</h3>
+                <h3 class="v">Gooflow - Chất từng sản phẩm</h3>
                 <h3 class="vr">Since - 2019</h3>
                 <div class="col-md-11 ftco-animate text-center">
                     <h1>Le Stylist</h1>
@@ -89,7 +96,11 @@
                                 <div class="product">
                                     <a href="/Shop/Product/@product.Id" class="img-prod"><img src="@product.ImagePaths.ImagePath" alt="Colorlib Template"></a>
                                     <div class="text pt-3 px-3">
-                                        <h3><a href="/Shop/Product/@product.Id">@product.Name</a></h3>
+                                        <h3>
+                                            <a href="/Shop/Product/@product.Id">
+                                                @product.Name
+                                            </a>
+                                        </h3>
                                         <div class="d-flex">
                                             <div class="pricing">
                                                 <p class="price"><span> @product.Price.000 VNĐ</span></p>
@@ -125,12 +136,12 @@
                 <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
                     <div class="heading-section-bold mb-5 mt-md-5">
                         <div class="ml-md-0">
-                            <h2 class="mb-4">Gooflow <br>Online <br> <span>Shoes Shop</span></h2>
+                            <h2 class="mb-4">Gooflow<br> Online<br> <span>Shoes Shop</span></h2>
                         </div>
                     </div>
                     <div class="pb-md-5">
-                        <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
-                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+                        <p>On her way she met a copy.The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country.But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
+                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.Pityful a rethoric question ran over her cheek, then she continued her way.</p>
                     </div>
                 </div>
             </div>
@@ -148,32 +159,36 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                @foreach (var product in Model)
+                @foreach (var product in top5Products)
                 {
                     <div class="col-sm col-md-6 col-lg ftco-animate">
                         <div class="product">
                             <a href="/Shop/Product/@product.Id" class="img-prod"><img class="img-fluid" src="@product.ImagePaths.ImagePath" alt="Colorlib Template"></a>
                             <div class="text py-3 px-3">
-                                <h3><a href="/Shop/Product/@product.Id">@product.Name</a></h3>
+                                <h3>
+                                    <a href="/Shop/Product/@product.Id">
+                                        @product.Name
+                                    </a>
+                                </h3>
                                 <div class="d-flex">
                                     <div class="pricing">
                                         <p class="price"><span>@product.Price 000 VNĐ</span></p>
                                     </div>
-                                    @*<div class="rating">
-                                        <p class="text-right">
-                                            <span class="ion-ios-star-outline"></span>
-                                            <span class="ion-ios-star-outline"></span>
-                                            <span class="ion-ios-star-outline"></span>
-                                            <span class="ion-ios-star-outline"></span>
-                                            <span class="ion-ios-star-outline"></span>
-                                        </p>
-                                    </div>*@
+                                    <div class="rating">
+                                            <p class="text-right">
+                                                <span class="ion-ios-star-outline"></span>
+                                                <span class="ion-ios-star-outline"></span>
+                                                <span class="ion-ios-star-outline"></span>
+                                                <span class="ion-ios-star-outline"></span>
+                                                <span class="ion-ios-star-outline"></span>
+                                            </p>
+                                        </div>
                                 </div>
                                 <hr>
                                 @*<p class="bottom-area d-flex">
-                                    <a href="/Shop/AddToCart/@product.Id" class="add-to-cart"><span>Thêm vào giỏ <i class="ion-ios-add ml-1"></i></span></a>
-                                    <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                                </p>*@
+                                        <a href="/Shop/AddToCart/@product.Id" class="add-to-cart"><span>Thêm vào giỏ <i class="ion-ios-add ml-1"></i></span></a>
+                                        <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
+                                    </p>*@
                             </div>
                         </div>
                     </div>
@@ -283,9 +298,6 @@
         </div>
     </section>
 
-
-
-
     <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(/Content/images/bg_4.jpg);">
         <div class="container">
             <div class="row justify-content-center py-5">
@@ -295,7 +307,7 @@
                             <div class="block-18 text-center">
                                 <div class="text">
                                     <strong class="number" data-number="10000">0</strong>
-                                    <span>Happy Customers</span>
+                                    <span>Khách hàng hài lòng</span>
                                 </div>
                             </div>
                         </div>
@@ -303,7 +315,7 @@
                             <div class="block-18 text-center">
                                 <div class="text">
                                     <strong class="number" data-number="100">0</strong>
-                                    <span>Branches</span>
+                                    <span>Nhãn hiệu</span>
                                 </div>
                             </div>
                         </div>
@@ -311,7 +323,7 @@
                             <div class="block-18 text-center">
                                 <div class="text">
                                     <strong class="number" data-number="1000">0</strong>
-                                    <span>Partner</span>
+                                    <span>Đối tác</span>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +331,7 @@
                             <div class="block-18 text-center">
                                 <div class="text">
                                     <strong class="number" data-number="100">0</strong>
-                                    <span>Awards</span>
+                                    <span>Giải thưởng</span>
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,11 @@
         x = new List<CartItem>();
     }
     float total = 0;
-    float ship = 20;
+    foreach (var z in x)
+    {
+        total += z.Product.Price;
+    }
+    float ship = x.Count > 0 ? 20 : 0;
 }
 
 @using ShopASP.Models
@@ -65,143 +69,149 @@
             </div>
         </div>
     </div>
+    @using (Html.BeginForm("Thanks", "Shop", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 ftco-animate">
+                        <form action="#" class="billing-form bg-light p-3 p-md-5">
+                            <h3 class="mb-4 billing-heading">Chi tiết hóa đơn</h3>
+                            <div class="row align-items-end">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="firstname">Họ và tên</label>
+                                        <input type="text" class="form-control" placeholder="" value="@customer.customer_name">
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="streetaddress">Địa chỉ nhận hàng</label>
+                                        <input type="text" class="form-control" placeholder="Địa chỉ nhận hàng" value="@customer.customer_address" />
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại liên hệ</label>
+                                        <input type="text" class="form-control" placeholder="" value="@customer.customer_phone">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="emailaddress">Email liên hệ</label>
+                                        <input type="text" class="form-control" placeholder="" value="@customer.customer_email">
+                                    </div>
+                                </div>
+                            </div>
+                        </form><!-- END -->
 
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-8 ftco-animate">
-                    <form action="#" class="billing-form bg-light p-3 p-md-5">
-                        <h3 class="mb-4 billing-heading">Chi tiết hóa đơn</h3>
-                        <div class="row align-items-end">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="firstname">Họ và tên</label>
-                                    <input type="text" class="form-control" placeholder="" value="@customer.customer_name">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="streetaddress">Địa chỉ nhận hàng</label>
-                                    <input type="text" class="form-control" placeholder="Địa chỉ nhận hàng" value="@customer.customer_address" />
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone">Số điện thoại liên hệ</label>
-                                    <input type="text" class="form-control" placeholder="" value="@customer.customer_phone">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="emailaddress">Email liên hệ</label>
-                                    <input type="text" class="form-control" placeholder="" value="@customer.customer_email">
-                                </div>
-                            </div>
-                        </div>
-                    </form><!-- END -->
-
-                    <div class="row mt-5 pt-3 d-flex">
-                        <div class="col-md-6 d-flex">
-                            <div class="cart-detail cart-total bg-light p-3 p-md-4">
-                                <h3 class="billing-heading mb-4">Tổng giá trị đơn hàng</h3>
-                                <p class="d-flex">
-                                    <span>Giá tiền tạm tính</span>
-                                    <span>@total 000 VNĐ</span>
-                                </p>
-                                <p class="d-flex">
-                                    <span>Phí giao hàng</span>
-                                    <span>@ship 000 VNĐ</span>
-                                </p>
-                                <p class="d-flex">
-                                    <span>Thuế VAT (10% - không bao gồm phí giao hàng)</span>
-                                    <span>@(total * 10 / 100) 000 VNĐ</span>
-                                </p>
-                                <hr>
-                                <p class="d-flex total-price">
-                                    <span>Tổng cộng</span>
-                                    <span>@(total + ship + (total * 10 / 100)) 000 VNĐ</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cart-detail bg-light p-3 p-md-4">
-                                <h3 class="billing-heading mb-4">Payment Method</h3>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2">Chuyển khoản trực tiếp</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2">Thanh toán khi nhận hàng</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2"> Visa/Paypal</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2"> Tôi đã đọc và đồng ý các điều khoản</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p><a href="#" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </section> <!-- .section -->
-
-    <section class="ftco-section bg-light">
-        <div class="container">
-            <div class="row justify-content-center mb-3 pb-3">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <h1 class="big">Sản phẩm</h1>
-                    <h2 class="mb-4">Các sản phẩm cùng loại</h2>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm col-md-6 col-lg ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template"></a>
-                        <div class="text py-3 px-3">
-                            <h3><a href="#">Young Woman Wearing Dress</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
+                        <div class="row mt-5 pt-3 d-flex">
+                            <div class="col-md-6 d-flex">
+                                <div class="cart-detail cart-total bg-light p-3 p-md-4">
+                                    <h3 class="billing-heading mb-4">Tổng giá trị đơn hàng</h3>
+                                    <p class="d-flex">
+                                        <span>Giá tiền tạm tính</span>
+                                        <span>@total 000 VNĐ</span>
+                                    </p>
+                                    <p class="d-flex">
+                                        <span>Phí giao hàng</span>
+                                        <span>@ship 000 VNĐ</span>
+                                    </p>
+                                    <p class="d-flex">
+                                        <span>Thuế VAT (10% - không bao gồm phí giao hàng)</span>
+                                        <span>@(total * 10 / 100) 000 VNĐ</span>
+                                    </p>
+                                    <hr>
+                                    <p class="d-flex total-price">
+                                        <span>Tổng cộng</span>
+                                        <span>@(total + ship + (total * 10 / 100)) 000 VNĐ</span>
                                     </p>
                                 </div>
                             </div>
-                            <hr>
-                            <p class="bottom-area d-flex">
-                                <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                            </p>
+                            <div class="col-md-6">
+                                <div class="cart-detail bg-light p-3 p-md-4">
+                                    <h3 class="billing-heading mb-4">Phương thức thanh toán</h3>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="radio">
+                                                <label><input type="radio" name="optradio" class="mr-2">Chuyển khoản trực tiếp</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="radio">
+                                                <label><input type="radio" name="optradio" class="mr-2">Thanh toán khi nhận hàng</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="radio">
+                                                <label><input type="radio" name="optradio" class="mr-2"> Tiền mặt/Visa/Paypal(Thanh toán tại quầy)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value="" class="mr-2"> Tôi đã đọc và đồng ý các điều khoản</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center"><a href="/Shop/Thanks" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section> <!-- .section -->
+    }
+
+        <section class="ftco-section bg-light">
+            <div class="container">
+                <div class="row justify-content-center mb-3 pb-3">
+                    <div class="col-md-12 heading-section text-center ftco-animate">
+                        <h1 class="big">Sản phẩm</h1>
+                        <h2 class="mb-4">Các sản phẩm cùng loại</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    @{
+                        //foreach(var item in top)
+                    }
+                    <div class="col-sm col-md-6 col-lg ftco-animate">
+                        <div class="product">
+                            <a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template"></a>
+                            <div class="text py-3 px-3">
+                                <h3><a href="#">Young Woman Wearing Dress</a></h3>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price"><span>$120.00</span></p>
+                                    </div>
+                                    <div class="rating">
+                                        <p class="text-right">
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                                    <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+                        

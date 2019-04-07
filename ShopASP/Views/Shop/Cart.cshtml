@@ -8,7 +8,16 @@
         x = new List<CartItem>();
     }
     float total = 0;
-    float ship = 20;
+    foreach(var z in x)
+    {
+        total += z.Product.Price;
+    }
+    float ship = x.Count > 0 ? 20 : 0;
+    var top5Products = (ViewBag.Top5 as List<Product>);
+    if (top5Products == null)
+    {
+        top5Products = new List<Product>();
+    }
 }
 
 @using ShopASP.Models
@@ -86,7 +95,6 @@
                             {
                                 foreach (var item in Model)
                                 {
-                                    total += item.Product.Price * item.Quantity;
                                     <tbody>
 
                                         <tr class="text-center">
@@ -148,7 +156,7 @@
                             <span>@(total + ship + (total * 10 / 100)) 000 VNĐ</span>
                         </p>
                     </div>
-                    <p class="text-center"><a href="/Shop/Checkout" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
+                    <p class="text-center"><a href="/Shop/CheckOut" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
                 </div>
             </div>
         </div>
@@ -166,114 +174,38 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm col-md-6 col-lg ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="~/Content/images/product-1.jpg" alt="Colorlib Template"></a>
-                        <div class="text py-3 px-3">
-                            <h3><a href="#">Young Woman Wearing Dress</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
+                @foreach (var item in top5Products)
+                {
+                    <div class="col-sm col-md-6 col-lg ftco-animate">
+                        <div class="product">
+                            <a href="#" class="img-prod"><img class="img-fluid" src="@item.ImagePaths.ImagePath" alt="Colorlib Template"></a>
+                            <div class="text py-3 px-3">
+                                <h3><a href="#">@item.Name</a></h3>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price"><span>@item.Price 000 VNĐ</span></p>
+                                    </div>
+                                    <div class="rating">
+                                        <p class="text-right">
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                            <span class="ion-ios-star-outline"></span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                    </p>
-                                </div>
+                                <hr>
+                                @*<p class="bottom-area d-flex">
+                                    <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                                    <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
+                                </p>*@
                             </div>
-                            <hr>
-                            <p class="bottom-area d-flex">
-                                <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm col-md-6 col-lg ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="~/Content/images/product-2.jpg" alt="Colorlib Template"></a>
-                        <div class="text py-3 px-3">
-                            <h3><a href="#">Young Woman Wearing Dress</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <p class="bottom-area d-flex">
-                                <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm col-md-6 col-lg ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="~/Content/images/product-3.jpg" alt="Colorlib Template"></a>
-                        <div class="text py-3 px-3">
-                            <h3><a href="#">Young Woman Wearing Dress</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <p class="bottom-area d-flex">
-                                <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm col-md-6 col-lg ftco-animate">
-                    <div class="product">
-                        <a href="#" class="img-prod"><img class="img-fluid" src="~/Content/images/product-4.jpg" alt="Colorlib Template"></a>
-                        <div class="text py-3 px-3">
-                            <h3><a href="#">Young Woman Wearing Dress</a></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price"><span>$120.00</span></p>
-                                </div>
-                                <div class="rating">
-                                    <p class="text-right">
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                        <span class="ion-ios-star-outline"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <p class="bottom-area d-flex">
-                                <a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-                                <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                }
+
+
             </div>
         </div>
     </section>
