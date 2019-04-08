@@ -16,5 +16,6 @@ namespace ShopASP.Models
         public string Phone { set; get; }
         public string Email { set; get; }
         public string ImagePath { set; get; }
+
     }
 }

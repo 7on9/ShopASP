@@ -238,7 +238,7 @@ namespace ShopASP.Controllers
                     //db.customer_imgs.InsertOnSubmit(customer_Img);
                     db.SubmitChanges();
 
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Employee", "Admin");
                 }
             }
             return View();

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title Page-->
-    <title>Dashboard</title>
+    <title>Nhân viên</title>
 
     <!-- Fontfaces CSS-->
     <link href="~/Content/Extra/css/font-face.css" rel="stylesheet" media="all">
@@ -30,6 +30,10 @@
 
 </head>
 @using ShopASP.Models
+@{
+    List<Cart> carts = ViewBag.Carts;
+    carts = carts == null ? new List<Cart>() : carts;
+}
 <body class="animsition">
     <div class="page-wrapper">
 
@@ -49,19 +53,19 @@
                         </li>
 
                         <li>
-                            <a href="/../Employee/Product">
-                                <i class="fas fa-user"></i>Sản phẩm
+                            <a href="/Employee/Product">
+                                <i class="fas fa-cube"></i>Sản phẩm
                             </a>
                         </li>
 
                         <li>
-                            <a href="table.html">
-                                <i class="fas fa-table"></i>Tables
+                            <a href="/Employee/Cart">
+                                <i class="fas fa-clipboard"></i>Đơn hàng đang chờ [@carts.Count]
                             </a>
                         </li>
                         <li>
                             <a href="form.html">
-                                <i class="far fa-check-square"></i>Forms
+                                <i class="far fa-archive"></i>Đơn hàng đã xử lý
                             </a>
                         </li>
                     </ul>
@@ -69,7 +73,6 @@
             </div>
         </aside>
         <!-- END MENU SIDEBAR-->
-
         <!-- PAGE CONTAINER-->
         <div class="page-container">
             <!-- HEADER DESKTOP-->
@@ -86,7 +89,7 @@
                                         <div class="content">
                                             @if (Session["employee"] != null)
                                             {
-                                            <a class="js-acc-btn" href="#">@(((employee)Session["employee"]).employee_email)</a>
+                                                <a class="js-acc-btn" href="#">@(((employee)Session["employee"]).employee_email)</a>
                                             }
                                             else
                                             {
@@ -116,12 +119,14 @@
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Đổi mật khẩu</a>
+                                                        <i class="zmdi zmdi-account"></i>Đổi mật khẩu
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="/Employee/Logout">
-                                                    <i class="zmdi zmdi-power"></i>Đăng xuất</a>
+                                                    <i class="zmdi zmdi-power"></i>Đăng xuất
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +137,6 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
@@ -182,5 +186,3 @@
 
 </html>
 <!-- end document-->
-
-

@@ -36,12 +36,6 @@ namespace ShopASP.Models
     partial void Insertsize(size instance);
     partial void Updatesize(size instance);
     partial void Deletesize(size instance);
-    partial void Insertbill(bill instance);
-    partial void Updatebill(bill instance);
-    partial void Deletebill(bill instance);
-    partial void Insertcart(cart instance);
-    partial void Updatecart(cart instance);
-    partial void Deletecart(cart instance);
     partial void Insertcategory(category instance);
     partial void Updatecategory(category instance);
     partial void Deletecategory(category instance);
@@ -60,6 +54,12 @@ namespace ShopASP.Models
     partial void Insertcustomer(customer instance);
     partial void Updatecustomer(customer instance);
     partial void Deletecustomer(customer instance);
+    partial void Insertcart(cart instance);
+    partial void Updatecart(cart instance);
+    partial void Deletecart(cart instance);
+    partial void Insertbill(bill instance);
+    partial void Updatebill(bill instance);
+    partial void Deletebill(bill instance);
     #endregion
 		
 		public dbShopASPDataContext() : 
@@ -105,22 +105,6 @@ namespace ShopASP.Models
 			get
 			{
 				return this.GetTable<size>();
-			}
-		}
-		
-		public System.Data.Linq.Table<bill> bills
-		{
-			get
-			{
-				return this.GetTable<bill>();
-			}
-		}
-		
-		public System.Data.Linq.Table<cart> carts
-		{
-			get
-			{
-				return this.GetTable<cart>();
 			}
 		}
 		
@@ -225,6 +209,22 @@ namespace ShopASP.Models
 			get
 			{
 				return this.GetTable<cart_detail>();
+			}
+		}
+		
+		public System.Data.Linq.Table<cart> carts
+		{
+			get
+			{
+				return this.GetTable<cart>();
+			}
+		}
+		
+		public System.Data.Linq.Table<bill> bills
+		{
+			get
+			{
+				return this.GetTable<bill>();
 			}
 		}
 	}
@@ -422,425 +422,6 @@ namespace ShopASP.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.bill")]
-	public partial class bill : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _bill_id;
-		
-		private int _employee_id;
-		
-		private int _customer_id;
-		
-		private int _cart_id;
-		
-		private System.Nullable<System.DateTime> _time_create;
-		
-		private EntityRef<cart> _cart;
-		
-		private EntityRef<employee> _employee;
-		
-		private EntityRef<customer> _customer;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onbill_idChanging(int value);
-    partial void Onbill_idChanged();
-    partial void Onemployee_idChanging(int value);
-    partial void Onemployee_idChanged();
-    partial void Oncustomer_idChanging(int value);
-    partial void Oncustomer_idChanged();
-    partial void Oncart_idChanging(int value);
-    partial void Oncart_idChanged();
-    partial void Ontime_createChanging(System.Nullable<System.DateTime> value);
-    partial void Ontime_createChanged();
-    #endregion
-		
-		public bill()
-		{
-			this._cart = default(EntityRef<cart>);
-			this._employee = default(EntityRef<employee>);
-			this._customer = default(EntityRef<customer>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bill_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int bill_id
-		{
-			get
-			{
-				return this._bill_id;
-			}
-			set
-			{
-				if ((this._bill_id != value))
-				{
-					this.Onbill_idChanging(value);
-					this.SendPropertyChanging();
-					this._bill_id = value;
-					this.SendPropertyChanged("bill_id");
-					this.Onbill_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_id", DbType="Int NOT NULL")]
-		public int employee_id
-		{
-			get
-			{
-				return this._employee_id;
-			}
-			set
-			{
-				if ((this._employee_id != value))
-				{
-					if (this._employee.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onemployee_idChanging(value);
-					this.SendPropertyChanging();
-					this._employee_id = value;
-					this.SendPropertyChanged("employee_id");
-					this.Onemployee_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_id", DbType="Int NOT NULL")]
-		public int customer_id
-		{
-			get
-			{
-				return this._customer_id;
-			}
-			set
-			{
-				if ((this._customer_id != value))
-				{
-					if (this._customer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Oncustomer_idChanging(value);
-					this.SendPropertyChanging();
-					this._customer_id = value;
-					this.SendPropertyChanged("customer_id");
-					this.Oncustomer_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_id", DbType="Int NOT NULL")]
-		public int cart_id
-		{
-			get
-			{
-				return this._cart_id;
-			}
-			set
-			{
-				if ((this._cart_id != value))
-				{
-					if (this._cart.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Oncart_idChanging(value);
-					this.SendPropertyChanging();
-					this._cart_id = value;
-					this.SendPropertyChanged("cart_id");
-					this.Oncart_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time_create", DbType="DateTime")]
-		public System.Nullable<System.DateTime> time_create
-		{
-			get
-			{
-				return this._time_create;
-			}
-			set
-			{
-				if ((this._time_create != value))
-				{
-					this.Ontime_createChanging(value);
-					this.SendPropertyChanging();
-					this._time_create = value;
-					this.SendPropertyChanged("time_create");
-					this.Ontime_createChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="cart_bill", Storage="_cart", ThisKey="cart_id", OtherKey="cart_id", IsForeignKey=true)]
-		public cart cart
-		{
-			get
-			{
-				return this._cart.Entity;
-			}
-			set
-			{
-				cart previousValue = this._cart.Entity;
-				if (((previousValue != value) 
-							|| (this._cart.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._cart.Entity = null;
-						previousValue.bills.Remove(this);
-					}
-					this._cart.Entity = value;
-					if ((value != null))
-					{
-						value.bills.Add(this);
-						this._cart_id = value.cart_id;
-					}
-					else
-					{
-						this._cart_id = default(int);
-					}
-					this.SendPropertyChanged("cart");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_bill", Storage="_employee", ThisKey="employee_id", OtherKey="employee_id", IsForeignKey=true)]
-		public employee employee
-		{
-			get
-			{
-				return this._employee.Entity;
-			}
-			set
-			{
-				employee previousValue = this._employee.Entity;
-				if (((previousValue != value) 
-							|| (this._employee.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._employee.Entity = null;
-						previousValue.bills.Remove(this);
-					}
-					this._employee.Entity = value;
-					if ((value != null))
-					{
-						value.bills.Add(this);
-						this._employee_id = value.employee_id;
-					}
-					else
-					{
-						this._employee_id = default(int);
-					}
-					this.SendPropertyChanged("employee");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_bill", Storage="_customer", ThisKey="customer_id", OtherKey="customer_id", IsForeignKey=true)]
-		public customer customer
-		{
-			get
-			{
-				return this._customer.Entity;
-			}
-			set
-			{
-				customer previousValue = this._customer.Entity;
-				if (((previousValue != value) 
-							|| (this._customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._customer.Entity = null;
-						previousValue.bills.Remove(this);
-					}
-					this._customer.Entity = value;
-					if ((value != null))
-					{
-						value.bills.Add(this);
-						this._customer_id = value.customer_id;
-					}
-					else
-					{
-						this._customer_id = default(int);
-					}
-					this.SendPropertyChanged("customer");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.cart")]
-	public partial class cart : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _cart_id;
-		
-		private System.Nullable<System.DateTime> _time_create;
-		
-		private System.Nullable<bool> _cart_status;
-		
-		private EntitySet<bill> _bills;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Oncart_idChanging(int value);
-    partial void Oncart_idChanged();
-    partial void Ontime_createChanging(System.Nullable<System.DateTime> value);
-    partial void Ontime_createChanged();
-    partial void Oncart_statusChanging(System.Nullable<bool> value);
-    partial void Oncart_statusChanged();
-    #endregion
-		
-		public cart()
-		{
-			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int cart_id
-		{
-			get
-			{
-				return this._cart_id;
-			}
-			set
-			{
-				if ((this._cart_id != value))
-				{
-					this.Oncart_idChanging(value);
-					this.SendPropertyChanging();
-					this._cart_id = value;
-					this.SendPropertyChanged("cart_id");
-					this.Oncart_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time_create", DbType="DateTime")]
-		public System.Nullable<System.DateTime> time_create
-		{
-			get
-			{
-				return this._time_create;
-			}
-			set
-			{
-				if ((this._time_create != value))
-				{
-					this.Ontime_createChanging(value);
-					this.SendPropertyChanging();
-					this._time_create = value;
-					this.SendPropertyChanged("time_create");
-					this.Ontime_createChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_status", DbType="Bit")]
-		public System.Nullable<bool> cart_status
-		{
-			get
-			{
-				return this._cart_status;
-			}
-			set
-			{
-				if ((this._cart_status != value))
-				{
-					this.Oncart_statusChanging(value);
-					this.SendPropertyChanging();
-					this._cart_status = value;
-					this.SendPropertyChanged("cart_status");
-					this.Oncart_statusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="cart_bill", Storage="_bills", ThisKey="cart_id", OtherKey="cart_id")]
-		public EntitySet<bill> bills
-		{
-			get
-			{
-				return this._bills;
-			}
-			set
-			{
-				this._bills.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_bills(bill entity)
-		{
-			this.SendPropertyChanging();
-			entity.cart = this;
-		}
-		
-		private void detach_bills(bill entity)
-		{
-			this.SendPropertyChanging();
-			entity.cart = null;
 		}
 	}
 	
@@ -1133,9 +714,9 @@ namespace ShopASP.Models
 		
 		private System.Nullable<byte> _employee_role;
 		
-		private EntitySet<bill> _bills;
-		
 		private EntitySet<log_change_product> _log_change_products;
+		
+		private EntitySet<bill> _bills;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1163,8 +744,8 @@ namespace ShopASP.Models
 		
 		public employee()
 		{
-			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
 			this._log_change_products = new EntitySet<log_change_product>(new Action<log_change_product>(this.attach_log_change_products), new Action<log_change_product>(this.detach_log_change_products));
+			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
 			OnCreated();
 		}
 		
@@ -1348,19 +929,6 @@ namespace ShopASP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_bill", Storage="_bills", ThisKey="employee_id", OtherKey="employee_id")]
-		public EntitySet<bill> bills
-		{
-			get
-			{
-				return this._bills;
-			}
-			set
-			{
-				this._bills.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_log_change_product", Storage="_log_change_products", ThisKey="employee_id", OtherKey="employee_id")]
 		public EntitySet<log_change_product> log_change_products
 		{
@@ -1371,6 +939,19 @@ namespace ShopASP.Models
 			set
 			{
 				this._log_change_products.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_bill", Storage="_bills", ThisKey="employee_id", OtherKey="employee_id")]
+		public EntitySet<bill> bills
+		{
+			get
+			{
+				return this._bills;
+			}
+			set
+			{
+				this._bills.Assign(value);
 			}
 		}
 		
@@ -1394,18 +975,6 @@ namespace ShopASP.Models
 			}
 		}
 		
-		private void attach_bills(bill entity)
-		{
-			this.SendPropertyChanging();
-			entity.employee = this;
-		}
-		
-		private void detach_bills(bill entity)
-		{
-			this.SendPropertyChanging();
-			entity.employee = null;
-		}
-		
 		private void attach_log_change_products(log_change_product entity)
 		{
 			this.SendPropertyChanging();
@@ -1413,6 +982,18 @@ namespace ShopASP.Models
 		}
 		
 		private void detach_log_change_products(log_change_product entity)
+		{
+			this.SendPropertyChanging();
+			entity.employee = null;
+		}
+		
+		private void attach_bills(bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.employee = this;
+		}
+		
+		private void detach_bills(bill entity)
 		{
 			this.SendPropertyChanging();
 			entity.employee = null;
@@ -2062,7 +1643,7 @@ namespace ShopASP.Models
 		
 		private System.Nullable<System.DateTime> _last_update;
 		
-		private EntitySet<bill> _bills;
+		private EntitySet<cart> _carts;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2094,7 +1675,7 @@ namespace ShopASP.Models
 		
 		public customer()
 		{
-			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
+			this._carts = new EntitySet<cart>(new Action<cart>(this.attach_carts), new Action<cart>(this.detach_carts));
 			OnCreated();
 		}
 		
@@ -2318,16 +1899,16 @@ namespace ShopASP.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_bill", Storage="_bills", ThisKey="customer_id", OtherKey="customer_id")]
-		public EntitySet<bill> bills
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_cart", Storage="_carts", ThisKey="customer_id", OtherKey="customer_id")]
+		public EntitySet<cart> carts
 		{
 			get
 			{
-				return this._bills;
+				return this._carts;
 			}
 			set
 			{
-				this._bills.Assign(value);
+				this._carts.Assign(value);
 			}
 		}
 		
@@ -2351,13 +1932,13 @@ namespace ShopASP.Models
 			}
 		}
 		
-		private void attach_bills(bill entity)
+		private void attach_carts(cart entity)
 		{
 			this.SendPropertyChanging();
 			entity.customer = this;
 		}
 		
-		private void detach_bills(bill entity)
+		private void detach_carts(cart entity)
 		{
 			this.SendPropertyChanging();
 			entity.customer = null;
@@ -2459,6 +2040,425 @@ namespace ShopASP.Models
 				{
 					this._color_id = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.cart")]
+	public partial class cart : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _cart_id;
+		
+		private int _customer_id;
+		
+		private System.Nullable<System.DateTime> _time_create;
+		
+		private System.Nullable<bool> _cart_status;
+		
+		private EntitySet<bill> _bills;
+		
+		private EntityRef<customer> _customer;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Oncart_idChanging(int value);
+    partial void Oncart_idChanged();
+    partial void Oncustomer_idChanging(int value);
+    partial void Oncustomer_idChanged();
+    partial void Ontime_createChanging(System.Nullable<System.DateTime> value);
+    partial void Ontime_createChanged();
+    partial void Oncart_statusChanging(System.Nullable<bool> value);
+    partial void Oncart_statusChanged();
+    #endregion
+		
+		public cart()
+		{
+			this._bills = new EntitySet<bill>(new Action<bill>(this.attach_bills), new Action<bill>(this.detach_bills));
+			this._customer = default(EntityRef<customer>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int cart_id
+		{
+			get
+			{
+				return this._cart_id;
+			}
+			set
+			{
+				if ((this._cart_id != value))
+				{
+					this.Oncart_idChanging(value);
+					this.SendPropertyChanging();
+					this._cart_id = value;
+					this.SendPropertyChanged("cart_id");
+					this.Oncart_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_customer_id", DbType="Int NOT NULL")]
+		public int customer_id
+		{
+			get
+			{
+				return this._customer_id;
+			}
+			set
+			{
+				if ((this._customer_id != value))
+				{
+					if (this._customer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Oncustomer_idChanging(value);
+					this.SendPropertyChanging();
+					this._customer_id = value;
+					this.SendPropertyChanged("customer_id");
+					this.Oncustomer_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time_create", DbType="DateTime")]
+		public System.Nullable<System.DateTime> time_create
+		{
+			get
+			{
+				return this._time_create;
+			}
+			set
+			{
+				if ((this._time_create != value))
+				{
+					this.Ontime_createChanging(value);
+					this.SendPropertyChanging();
+					this._time_create = value;
+					this.SendPropertyChanged("time_create");
+					this.Ontime_createChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_status", DbType="Bit")]
+		public System.Nullable<bool> cart_status
+		{
+			get
+			{
+				return this._cart_status;
+			}
+			set
+			{
+				if ((this._cart_status != value))
+				{
+					this.Oncart_statusChanging(value);
+					this.SendPropertyChanging();
+					this._cart_status = value;
+					this.SendPropertyChanged("cart_status");
+					this.Oncart_statusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="cart_bill", Storage="_bills", ThisKey="cart_id", OtherKey="cart_id")]
+		public EntitySet<bill> bills
+		{
+			get
+			{
+				return this._bills;
+			}
+			set
+			{
+				this._bills.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="customer_cart", Storage="_customer", ThisKey="customer_id", OtherKey="customer_id", IsForeignKey=true)]
+		public customer customer
+		{
+			get
+			{
+				return this._customer.Entity;
+			}
+			set
+			{
+				customer previousValue = this._customer.Entity;
+				if (((previousValue != value) 
+							|| (this._customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._customer.Entity = null;
+						previousValue.carts.Remove(this);
+					}
+					this._customer.Entity = value;
+					if ((value != null))
+					{
+						value.carts.Add(this);
+						this._customer_id = value.customer_id;
+					}
+					else
+					{
+						this._customer_id = default(int);
+					}
+					this.SendPropertyChanged("customer");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_bills(bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.cart = this;
+		}
+		
+		private void detach_bills(bill entity)
+		{
+			this.SendPropertyChanging();
+			entity.cart = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.bill")]
+	public partial class bill : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _bill_id;
+		
+		private int _employee_id;
+		
+		private int _cart_id;
+		
+		private System.Nullable<System.DateTime> _time_create;
+		
+		private EntityRef<cart> _cart;
+		
+		private EntityRef<employee> _employee;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onbill_idChanging(int value);
+    partial void Onbill_idChanged();
+    partial void Onemployee_idChanging(int value);
+    partial void Onemployee_idChanged();
+    partial void Oncart_idChanging(int value);
+    partial void Oncart_idChanged();
+    partial void Ontime_createChanging(System.Nullable<System.DateTime> value);
+    partial void Ontime_createChanged();
+    #endregion
+		
+		public bill()
+		{
+			this._cart = default(EntityRef<cart>);
+			this._employee = default(EntityRef<employee>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bill_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int bill_id
+		{
+			get
+			{
+				return this._bill_id;
+			}
+			set
+			{
+				if ((this._bill_id != value))
+				{
+					this.Onbill_idChanging(value);
+					this.SendPropertyChanging();
+					this._bill_id = value;
+					this.SendPropertyChanged("bill_id");
+					this.Onbill_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_id", DbType="Int NOT NULL")]
+		public int employee_id
+		{
+			get
+			{
+				return this._employee_id;
+			}
+			set
+			{
+				if ((this._employee_id != value))
+				{
+					if (this._employee.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onemployee_idChanging(value);
+					this.SendPropertyChanging();
+					this._employee_id = value;
+					this.SendPropertyChanged("employee_id");
+					this.Onemployee_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cart_id", DbType="Int NOT NULL")]
+		public int cart_id
+		{
+			get
+			{
+				return this._cart_id;
+			}
+			set
+			{
+				if ((this._cart_id != value))
+				{
+					if (this._cart.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Oncart_idChanging(value);
+					this.SendPropertyChanging();
+					this._cart_id = value;
+					this.SendPropertyChanged("cart_id");
+					this.Oncart_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_time_create", DbType="DateTime")]
+		public System.Nullable<System.DateTime> time_create
+		{
+			get
+			{
+				return this._time_create;
+			}
+			set
+			{
+				if ((this._time_create != value))
+				{
+					this.Ontime_createChanging(value);
+					this.SendPropertyChanging();
+					this._time_create = value;
+					this.SendPropertyChanged("time_create");
+					this.Ontime_createChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="cart_bill", Storage="_cart", ThisKey="cart_id", OtherKey="cart_id", IsForeignKey=true)]
+		public cart cart
+		{
+			get
+			{
+				return this._cart.Entity;
+			}
+			set
+			{
+				cart previousValue = this._cart.Entity;
+				if (((previousValue != value) 
+							|| (this._cart.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._cart.Entity = null;
+						previousValue.bills.Remove(this);
+					}
+					this._cart.Entity = value;
+					if ((value != null))
+					{
+						value.bills.Add(this);
+						this._cart_id = value.cart_id;
+					}
+					else
+					{
+						this._cart_id = default(int);
+					}
+					this.SendPropertyChanged("cart");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="employee_bill", Storage="_employee", ThisKey="employee_id", OtherKey="employee_id", IsForeignKey=true)]
+		public employee employee
+		{
+			get
+			{
+				return this._employee.Entity;
+			}
+			set
+			{
+				employee previousValue = this._employee.Entity;
+				if (((previousValue != value) 
+							|| (this._employee.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._employee.Entity = null;
+						previousValue.bills.Remove(this);
+					}
+					this._employee.Entity = value;
+					if ((value != null))
+					{
+						value.bills.Add(this);
+						this._employee_id = value.employee_id;
+					}
+					else
+					{
+						this._employee_id = default(int);
+					}
+					this.SendPropertyChanged("employee");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

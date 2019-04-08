@@ -89,6 +89,7 @@ create table size(
 
 create table cart(
 	cart_id int identity(1,1) PRIMARY KEY,
+	customer_id int not null,
 	time_create datetime,
 	cart_status bit
 )
@@ -104,7 +105,6 @@ create table cart_detail(
 create table bill(
 	bill_id int identity(1,1) PRIMARY KEY,
 	employee_id int not null,
-	customer_id int not null,
 	cart_id int not null,
 	time_create datetime
 )
@@ -155,7 +155,7 @@ alter table bill
 	FOREIGN KEY (employee_id) REFERENCES employee(employee_id) on update cascade
 go
 
-alter table bill
+alter table cart
 	add CONSTRAINT FK_customer_bill
 	FOREIGN KEY (customer_id) REFERENCES customer(customer_id) on update cascade
 go

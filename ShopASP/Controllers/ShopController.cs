@@ -122,11 +122,13 @@ namespace ShopASP.Controllers
             cart newCart = new cart();
             try
             {
-                db.ExecuteQuery<cart>("insert into cart values({0}, {1})",
-                Utility.getNowToSQLDateTime(),
+                db.ExecuteQuery<cart>("insert into cart values({0}, {1}, {2})",
+                    (Session["customer"] as customer).customer_id,
+                    Utility.getNowToSQLDateTime(),
                 0);
             }
-            catch (Exception e){}
+            catch (Exception e){
+            }
             
             //0 = chưa xử lý - 1 =  đã xử lý
             db.SubmitChanges();
@@ -147,7 +149,7 @@ namespace ShopASP.Controllers
                     cart_Detail.color_id);
                 db.SubmitChanges();
             }
-            
+            Session["cart"] = null;
             return View();
         }
     }

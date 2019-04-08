@@ -126,7 +126,7 @@
                                     <hr>
                                     <p class="d-flex total-price">
                                         <span>Tổng cộng</span>
-                                        <span>@total 00 VNĐ</span>
+                                        <span>@(total + total / 10 + ship)00 VNĐ</span>
                                     </p>
                                 </div>
                             </div>
@@ -136,21 +136,21 @@
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2">Chuyển khoản trực tiếp</label>
+                                                <label><input type="radio" name="radioDirect" class="mr-2" id="radioDirect">Chuyển khoản trực tiếp</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2">Thanh toán khi nhận hàng</label>
+                                                <label><input type="radio" name="radioCod" id="radioCod" class="mr-2">Thanh toán khi nhận hàng</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <div class="radio">
-                                                <label><input type="radio" name="optradio" class="mr-2"> Tiền mặt/Visa/Paypal(Thanh toán tại quầy)</label>
+                                                <label><input type="radio" name="radioInstant" id="radioInstant" class="mr-2"> Tiền mặt/Visa/Paypal(Thanh toán tại quầy)</label>
                                             </div>
                                         </div>
                                     </div>

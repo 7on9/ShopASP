@@ -1,0 +1,111 @@
+﻿@model ShopASP.Models.Cart
+
+@{
+    ViewBag.Title = "CartInfor";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<h2>Thông tin giỏ hàng</h2>
+
+<div>
+    <hr />
+    <div class="row col-lg-12 offset-0">
+        <button type="button" class="btn btn-success col-lg-2" onclick="confirmCart()" id="btnConfirmCart">
+            <i class="fa fa-check-square"></i>&nbsp; Xử lý đơn hàng
+        </button>
+    </div>
+    <br/>
+    <dl class="dl-horizontal row">
+        <dt class="col-md-4">
+            @Html.Label("Mã đơn")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Ngày tạo")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.TimeCreate)
+        </dd>
+        <dt class="col-md-4">
+            @Html.Label("Mã khách hàng")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Customer.ID)
+        </dd>
+        <dt class="col-md-4">
+            @Html.Label("Email khách hàng")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Customer.Email)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Số điện thoại khách hàng")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Customer.Phone)
+        </dd>
+
+
+        <dt class="col-md-4">
+            @Html.Label("Địa chỉ giao")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Customer.Address)
+        </dd>
+    </dl>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="title-1 m-b-25 text-center">Sản phẩm trong giỏ</h2>
+            <div class="table-responsive table--no-card m-b-40">
+                <table class="table table-borderless table-striped table-earning">
+                    <thead>
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Màu</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Product.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model.Product[i].Product.Id</td>
+                                <td>@Model.Product[i].Product.Name</td>
+                                <td>@Model.Product[i].Quantity</td>
+                                <td>@Model.Product[i].Color</td>
+                                <td>@Model.Product[i].Size</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmCart() {
+        alert("Bằng việc xác nhận, bạn sẽ tiến hành tạo hóa đơn cho đơn hàng " + @Model.Id);
+        let pass = prompt("Nhập \"Xác nhận\" để tiến hành tạo ");
+        if (pass === "Xác nhận") {
+            location.href = '/Employee/ConfirmCart/@Model.Id';
+        } else {
+            alert("Xác thực lỗi");
+        }
+    }
+</script>

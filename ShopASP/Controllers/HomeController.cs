@@ -39,23 +39,24 @@ namespace ShopASP.Controllers
             }
             return products;
         }
-            private List<Product> GetAllProducts()
+        private List<Product> GetAllProducts()
         {
             var listProducts = (from a in dbShopASP.products
-                               join b in dbShopASP.product_details
-                                on a.product_id equals b.product_id
-                               join c in dbShopASP.product_imgs
-                                on a.product_id equals c.product_id
-                               select new {
-                                   a.product_id,
-                                   a.product_price,
-                                   b.product_name,
-                                   c.product_img_path,
-                                   c.color_id
-                               }).ToList();
+                                join b in dbShopASP.product_details
+                                 on a.product_id equals b.product_id
+                                join c in dbShopASP.product_imgs
+                                 on a.product_id equals c.product_id
+                                select new
+                                {
+                                    a.product_id,
+                                    a.product_price,
+                                    b.product_name,
+                                    c.product_img_path,
+                                    c.color_id
+                                }).ToList();
             List<Product> products = new List<Product>();
             int i = 0;
-            foreach(var product in listProducts)
+            foreach (var product in listProducts)
             {
                 products.Add(new Product());
                 products[i].Id = product.product_id;
@@ -66,7 +67,7 @@ namespace ShopASP.Controllers
             }
             return products;
             //return dbShopASP.products.ToList();
-        } 
+        }
 
         public ActionResult Index()
         {

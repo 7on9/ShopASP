@@ -14,7 +14,7 @@ namespace ShopASP.Controllers
     public class EmployeeController : Controller
     {
         dbShopASPDataContext db = new dbShopASPDataContext();
-
+        private List<Cart> waitingCarts = DbInteract.GetAllWaitingCart();
         // GET: Employee
         public ActionResult Index()
         {
@@ -22,17 +22,18 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
+            ViewBag.Carts = waitingCarts;
             return View();
         }
 
-        // GET: /Account/Login
+        // GET: /Employee/Login
 
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: /Account/Login
+        // POST: /Employee/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(EmployeeViewModels model)
@@ -60,7 +61,6 @@ namespace ShopASP.Controllers
             return View(model);
         }
 
-
         private List<Customer> GetAllCustomer()
         {
             var listAllCustomer = (from a in db.customers
@@ -86,9 +86,40 @@ namespace ShopASP.Controllers
                 customers[i].Email = customer.customer_email;
                 customers[i].Phone = customer.customer_phone;
                 customers[i].Dob = customer.customer_dob;
+                i++;
             }
 
             return customers;
+        }
+
+        private List<Cart> GetFullDetailOfCart(List<Cart> listCart)
+        {
+            List<Cart> carts = new List<Cart>();
+            carts.AddRange(listCart);
+            foreach (var cart in carts)
+            {
+                var products = (from a in db.cart_details
+                                where a.cart_id.Equals(cart.Id)
+                                select new
+                                {
+                                    a.cart_id,
+                                    a.product_id,
+                                    a.quantum,
+                                    a.color_id,
+                                    a.size_id
+                                }).ToList();
+                cart.Product = new List<CartItem>();
+                foreach (var product in products)
+                {
+                    cart.Product.Add(
+                        new CartItem(DbInteract.GetProduct(product.product_id), 
+                        product.quantum, 
+                        product.color_id, 
+                        product.size_id));
+                }
+            }
+
+            return carts;
         }
 
         public List<Product> GetAllProduct()
@@ -134,12 +165,33 @@ namespace ShopASP.Controllers
             return products;
         }
 
+        // GET 
         public ActionResult CreateNewProduct()
         {
             ViewBag.Color = db.colors.ToList();
             return View();
         }
 
+        // GET 
+        public ActionResult Cart()
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            ViewBag.Carts = waitingCarts;
+            return View();
+        }
+
+        public ActionResult CartInfor(int id)
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            ViewBag.Carts = waitingCarts;
+            return View(DbInteract.GetFullDetailOfCart(id));
+        }
 
         [HttpPost]
         public ActionResult CreateNewProduct(ProductViewModels form)
@@ -148,6 +200,7 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
+            ViewBag.Carts = waitingCarts;
             employee thisAccount = (employee)Session["employee"];
             HttpPostedFileBase file = form.ImagePath;
             if (file != null && file.ContentLength > 0)
@@ -180,7 +233,7 @@ namespace ShopASP.Controllers
                 //db.customer_imgs.InsertOnSubmit(customer_Img);
                 db.SubmitChanges();
 
-                return RedirectToAction("Index", "Employee");
+                return RedirectToAction("Product", "Employee");
             }
             return View();
 
@@ -192,7 +245,7 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
-
+            ViewBag.Carts = waitingCarts;
             return View(GetAllProduct());
         }
 
