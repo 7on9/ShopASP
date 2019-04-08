@@ -145,5 +145,35 @@ namespace ShopASP.Models.Utility
 
             return true;
         }
-}
+
+        public static List<Product> GetTopProducts(int count)
+        {
+            dbShopASPDataContext db = new dbShopASPDataContext();
+            var listProducts = (from a in db.products
+                                join b in db.product_details
+                                 on a.product_id equals b.product_id
+                                join c in db.product_imgs
+                                 on a.product_id equals c.product_id
+                                select new
+                                {
+                                    a.product_id,
+                                    a.product_price,
+                                    b.product_name,
+                                    c.product_img_path,
+                                    c.color_id
+                                }).Take(count).ToList();
+            List<Product> products = new List<Product>();
+            int i = 0;
+            foreach (var product in listProducts)
+            {
+                products.Add(new Product());
+                products[i].Id = product.product_id;
+                products[i].Name = product.product_name;
+                products[i].ImagePaths = new ProductImg(product.product_id, product.product_img_path, product.color_id);
+                products[i].Price = (float)product.product_price;
+                i++;
+            }
+            return products;
+        }
+    }
 }

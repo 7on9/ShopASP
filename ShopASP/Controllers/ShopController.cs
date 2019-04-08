@@ -13,9 +13,17 @@ namespace ShopASP.Controllers
     {
         dbShopASPDataContext db = new dbShopASPDataContext();
         // GET: Shop
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    return View(DbInteract.GetTopProducts(6));
+        //}
+
+        public ActionResult Index(int ? page)
         {
-            return View();
+            page = page == null ? 1 : page;
+            int get = (int)page;
+
+            return View(DbInteract.GetTopProducts(get*6));
         }
 
         public Product GetProduct(int id)
