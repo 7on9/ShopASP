@@ -72,7 +72,7 @@ namespace ShopASP.Controllers
             {
                 string extend = Path.GetExtension(file.FileName);
                 string fileName = Utility.ComputeSha256Hash((thisCustomer.customer_email)) + extend;
-                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCTS), fileName);
+                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_CUSTOMER), fileName);
                 
                 var customer = db
                 .customers

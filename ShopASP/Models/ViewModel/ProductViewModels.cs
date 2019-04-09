@@ -8,6 +8,25 @@ namespace ShopASP.Models.ViewModel
 {
     public class ProductViewModels
     {
+        public ProductViewModels()
+        {
+
+        }
+
+        public ProductViewModels(int id, int quantum, float price, string name, string decrible, string tag, int productColor)
+        {
+            Id = id;
+            Quantum = quantum;
+            Price = price;
+            Name = name;
+            Decrible = decrible;
+            Tag = tag;
+            ProductColor = productColor;
+        }
+
+        [Display (Name = "Mã sản phẩm")]
+        public int Id { set; get; }
+
         [Required, Display(Name = "Số lượng")]
         public int Quantum { set; get; }
 

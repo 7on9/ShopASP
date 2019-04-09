@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopASP.Models.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -46,6 +47,38 @@ namespace ShopASP.Models.Utility
                 product.Colors = new Color(i.color_id, i.color_name, i.color_hex);
             }
             return product;
+        }
+
+        public static List<Product> GetAllProducts()
+        {
+            dbShopASPDataContext db = new dbShopASPDataContext();
+            var listProducts = (from a in db.products
+                                join b in db.product_details
+                                 on a.product_id equals b.product_id
+                                join c in db.product_imgs
+                                 on a.product_id equals c.product_id
+                                where a.product_quantum >= 0
+                                select new
+                                {
+                                    a.product_id,
+                                    a.product_price,
+                                    b.product_name,
+                                    c.product_img_path,
+                                    c.color_id
+                                }).ToList();
+            List<Product> products = new List<Product>();
+            int i = 0;
+            foreach (var product in listProducts)
+            {
+                products.Add(new Product());
+                products[i].Id = product.product_id;
+                products[i].Name = product.product_name;
+                products[i].ImagePaths = new ProductImg(product.product_id, product.product_img_path, product.color_id);
+                products[i].Price = (float)product.product_price;
+                i++;
+            }
+            return products;
+            //return dbShopASP.products.ToList();
         }
 
         public static List<Cart> GetAllWaitingCart()

@@ -52,6 +52,10 @@ namespace ShopASP.Controllers
                 );
                 if (employee != null)
                 {
+                    if (employee.employee_role < 1)
+                    {
+                        return RedirectToAction("Login");
+                    }
                     Session["employee"] = employee;
                     return RedirectToAction("Index", "Employee");
                 }
@@ -130,7 +134,7 @@ namespace ShopASP.Controllers
                                   on a.product_id equals c.product_id
                                  join d in db.colors
                                   on c.color_id equals d.color_id
-                                 where a.product_quantum <= 0
+                                 where a.product_quantum >= 0
                                  select new
                                  {
                                      a.product_id,
@@ -168,6 +172,14 @@ namespace ShopASP.Controllers
         // GET 
         public ActionResult CreateNewProduct()
         {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            if ((Session["employee"] as employee).employee_role < 1)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Color = db.colors.ToList();
             return View();
         }
@@ -196,6 +208,7 @@ namespace ShopASP.Controllers
             
             return View(DbInteract.GetFullDetailOfCart(id));
         }
+
         // GET: Shop/ConfirmCart/:id 
         public ActionResult ConfirmCart(int id)
         {
@@ -222,13 +235,14 @@ namespace ShopASP.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateNewProduct(ProductViewModels form)
+        public ActionResult EditProduct(ProductViewModels form)
         {
             if (Session["employee"] == null)
             {
                 return RedirectToAction("Login", "Employee");
             }
-            ViewBag.Carts = waitingCarts;
+            //ViewBag.Carts = waitingCarts;
+            //ViewBag.Color = db.colors.ToList();
             employee thisAccount = (employee)Session["employee"];
             HttpPostedFileBase file = form.ImagePath;
             if (file != null && file.ContentLength > 0)
@@ -237,7 +251,51 @@ namespace ShopASP.Controllers
                 string fileName = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
                     .TotalSeconds
                     .ToString() + extend;
-                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCTS), fileName);
+                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCT), fileName);
+
+                product product = db.products.FirstOrDefault(m => m.product_id.Equals(form.Id));
+                
+                product.product_price = form.Price;
+                product.product_quantum = form.Quantum;
+                
+                product_detail product_detail = db.product_details.FirstOrDefault(m => m.product_id.Equals(form.Id));
+                
+                product_detail.product_decrible = form.Decrible;
+                product_detail.product_name = form.Name;
+                product_detail.product_tag = form.Tag;
+
+                product_img product_img = db.product_imgs.FirstOrDefault(m => m.product_id.Equals(form.Id));
+                product_img.color_id = form.ProductColor;
+                product_img.product_img_path = Utility.CorrectPath(path);
+
+                file.SaveAs(path);
+
+                db.SubmitChanges();
+
+                return RedirectToAction("Product", "Employee");
+            }
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult CreateNewProduct(ProductViewModels form)
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            //ViewBag.Carts = waitingCarts;
+            //ViewBag.Color = db.colors.ToList();
+            employee thisAccount = (employee)Session["employee"];
+            HttpPostedFileBase file = form.ImagePath;
+            if (file != null && file.ContentLength > 0)
+            {
+                string extend = Path.GetExtension(file.FileName);
+                string fileName = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
+                    .TotalSeconds
+                    .ToString() + extend;
+                string path = Path.Combine(Server.MapPath(Utility.PATH_IMG_PRODUCT), fileName);
 
                 product newProduct = new product();
 
@@ -273,7 +331,19 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
-            return View(DbInteract.GetProduct(id));
+            if ((Session["employee"] as employee).employee_role < 1)
+            {
+                return RedirectToAction("Login");
+            }
+            ViewBag.Color = db.colors.ToList();
+            Product product = DbInteract.GetProduct(id);
+            return View(new ProductViewModels(product.Id, 
+                product.Quantum, 
+                product.Price, 
+                product.Name, 
+                product.Describle, 
+                product.Tag, 
+                product.Colors.Id));
         }
 
         public ActionResult DeleteProduct(int id)
@@ -282,7 +352,10 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
-
+            if ((Session["employee"] as employee).employee_role < 1)
+            {
+                return RedirectToAction("Login");
+            }
             product product = db.products.FirstOrDefault(m => m.product_id == id);
             if(product != null)
             {
@@ -298,6 +371,10 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
+            if ((Session["employee"] as employee).employee_role < 1)
+            {
+                return RedirectToAction("Login");
+            }
             ViewBag.Carts = waitingCarts;
             return View(GetAllProduct());
         }
@@ -308,7 +385,10 @@ namespace ShopASP.Controllers
             {
                 return RedirectToAction("Login", "Employee");
             }
-            
+            if ((Session["employee"] as employee).employee_role < 1)
+            {
+                return RedirectToAction("Login");
+            }
             return View(DbInteract.GetProduct(id));
         }
 
