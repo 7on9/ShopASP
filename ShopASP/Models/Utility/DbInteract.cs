@@ -140,9 +140,31 @@ namespace ShopASP.Models.Utility
             return cart;
         }
 
-        public static bool CreateBill(Cart cart)
+        public static float GetTotalOfCart(int id)
         {
+            Cart cart = GetFullDetailOfCart(id);
+            float total = 0;
+            foreach(var product in cart.Product)
+            {
+                total += (product.Product.Price * product.Quantity);
+            }
+            total += 20 + total / 10;
+            return total;
+        }
 
+        public static bool CreateBill(int cart_id, int employee_id)
+        {
+            dbShopASPDataContext db = new dbShopASPDataContext();
+            try
+            {
+                db.ExecuteQuery<bill>("Insert into bill values({0}, {1}, {2})", employee_id, cart_id, Utility.GetNowToSQLDateTime());
+                db.SubmitChanges();
+            }
+            catch
+            {
+
+            }
+            
             return true;
         }
 
@@ -154,6 +176,7 @@ namespace ShopASP.Models.Utility
                                  on a.product_id equals b.product_id
                                 join c in db.product_imgs
                                  on a.product_id equals c.product_id
+                                 where a.product_quantum >= 0
                                 select new
                                 {
                                     a.product_id,
@@ -174,6 +197,20 @@ namespace ShopASP.Models.Utility
                 i++;
             }
             return products;
+        }
+
+        public static Color GetColorById(int id)
+        {
+            dbShopASPDataContext db = new dbShopASPDataContext();
+            var color = db.colors.FirstOrDefault(m => m.color_id.Equals(id));
+            Color returnColor = new Color(id, color.color_name, color.color_hex);
+            return returnColor;
+        }
+
+        public static size GetSizeById(int id)
+        {
+            dbShopASPDataContext db = new dbShopASPDataContext();
+            return db.sizes.FirstOrDefault(m => m.size_id.Equals(id));
         }
     }
 }

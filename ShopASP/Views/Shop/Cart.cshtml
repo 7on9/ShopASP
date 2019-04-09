@@ -95,8 +95,9 @@
                             {
                                 foreach (var item in Model)
                                 {
+                                    total = item.Product.Price * item.Quantity;
                                     <tbody>
-
+                                        
                                         <tr class="text-center">
 
                                             <td class="product-remove">
@@ -139,6 +140,7 @@
                     <div class="cart-total mb-3">
                         <h3>Tổng giá trị đơn hàng</h3>
                         <p class="d-flex">
+                           
                             <span>Giá tiền tạm tính</span>
                             <span>@total 000 VNĐ</span>
                         </p>
@@ -153,7 +155,7 @@
                         <hr>
                         <p class="d-flex total-price">
                             <span>Tổng cộng</span>
-                            <span>@(total + total/10 +ship) 000 VNĐ</span>
+                            <span>@(total + total/10 +ship)00 VNĐ</span>
                         </p>
                     </div>
                     <p class="text-center"><a href="/Shop/CheckOut" class="btn btn-primary py-3 px-4">Thanh toán</a></p>

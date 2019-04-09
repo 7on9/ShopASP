@@ -60,7 +60,7 @@ namespace ShopASP.Models.Utility
             }
         }
 
-        public static string getNowToSQLDateTime()
+        public static string GetNowToSQLDateTime()
         {
             DateTime myDateTime = DateTime.Now;
             return myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");

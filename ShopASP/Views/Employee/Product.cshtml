@@ -11,10 +11,6 @@
             <button type="button" class="btn btn-success col-lg-2" onclick="location.href='/Employee/CreateNewProduct'">
                 <i class="fa fa-plus-circle"></i>&nbsp; Thêm mới
             </button>
-            &nbsp;
-            <button type="button" class="btn btn-danger col-lg-2">
-                <i class="fa fa-minus-circle"></i>&nbsp; Xóa
-            </button>
         </div>
 
         <h2 class="title-1 m-b-25 text-center">Danh sách sản phẩm</h2>
@@ -33,7 +29,7 @@
                 <tbody>
                     @foreach (var product in Model)
                     {
-                    <tr>
+                    <tr onclick="location.href='/Employee/ProductDetail/@product.Id'">
                         <td>@product.Id</td>
                         <td>@product.Name</td>
                         <td>@product.Price</td>

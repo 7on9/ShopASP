@@ -686,6 +686,8 @@
     <Content Include="Views\Employee\CartInfor.cshtml">
       <BrowseToURL>~/Employee/CartInfor</BrowseToURL>
     </Content>
+    <Content Include="Views\Employee\ProductDetail.cshtml" />
+    <Content Include="Views\Employee\EditProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,5 +9,7 @@ namespace ShopASP.Models
     {
         public int Id { set; get; }
         public Cart Cart {set; get;}
+        public Employee Employee { set; get; }
+        public string TimeCreate { set; get; }
     }
 }

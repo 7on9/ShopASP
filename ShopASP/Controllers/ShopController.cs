@@ -26,51 +26,51 @@ namespace ShopASP.Controllers
             return View(DbInteract.GetTopProducts(get*6));
         }
 
-        public Product GetProduct(int id)
-        {
-            var productFromDb = (from a in db.products
-                                 join b in db.product_details
-                                  on a.product_id equals b.product_id
-                                 join c in db.product_imgs
-                                  on a.product_id equals c.product_id
-                                 join d in db.colors
-                                  on c.color_id equals d.color_id
-                                 where a.product_id == id
-                                 select new
-                                 {
-                                     a.product_id,
-                                     a.product_quantum,
-                                     a.product_price,
-                                     b.product_decrible,
-                                     b.product_tag,
-                                     c.color_id,
-                                     d.color_name,
-                                     d.color_hex,
-                                     b.product_name,
-                                     c.product_img_path
-                                 }).ToList();
-            Product product = new Product();
+        //public Product GetProduct(int id)
+        //{
+        //    var productFromDb = (from a in db.products
+        //                         join b in db.product_details
+        //                          on a.product_id equals b.product_id
+        //                         join c in db.product_imgs
+        //                          on a.product_id equals c.product_id
+        //                         join d in db.colors
+        //                          on c.color_id equals d.color_id
+        //                         where a.product_id == id
+        //                         select new
+        //                         {
+        //                             a.product_id,
+        //                             a.product_quantum,
+        //                             a.product_price,
+        //                             b.product_decrible,
+        //                             b.product_tag,
+        //                             c.color_id,
+        //                             d.color_name,
+        //                             d.color_hex,
+        //                             b.product_name,
+        //                             c.product_img_path
+        //                         }).ToList();
+        //    Product product = new Product();
 
-            product.Id = productFromDb[0].product_id;
-            product.Price = (float)productFromDb[0].product_price;
-            product.Quantum = (int)productFromDb[0].product_quantum;
-            product.Tag = productFromDb[0].product_tag;
-            product.Name = productFromDb[0].product_name;
-            product.Describle = productFromDb[0].product_decrible;
+        //    product.Id = productFromDb[0].product_id;
+        //    product.Price = (float)productFromDb[0].product_price;
+        //    product.Quantum = (int)productFromDb[0].product_quantum;
+        //    product.Tag = productFromDb[0].product_tag;
+        //    product.Name = productFromDb[0].product_name;
+        //    product.Describle = productFromDb[0].product_decrible;
 
-            foreach (var i in productFromDb)
-            {
-                product.ImagePaths = new ProductImg(i.product_id, i.product_img_path, i.color_id);
-                product.Colors = new Color(i.color_id, i.color_name, i.color_hex);
-            }
-            return product;
-        }
+        //    foreach (var i in productFromDb)
+        //    {
+        //        product.ImagePaths = new ProductImg(i.product_id, i.product_img_path, i.color_id);
+        //        product.Colors = new Color(i.color_id, i.color_name, i.color_hex);
+        //    }
+        //    return product;
+        //}
 
         public ActionResult Product(int id)
         {
             ViewBag.Color = db.colors.ToList();
             ViewBag.Size = db.sizes.ToList();
-            return View(GetProduct(id));
+            return View(DbInteract.GetProduct(id));
         }
 
         public ActionResult AddToCart(FormCollection cartItem)
@@ -84,7 +84,7 @@ namespace ShopASP.Controllers
             else
             {
                 carts.Add(new CartItem(
-                    GetProduct(int.Parse(cartItem["IdProduct"])), 
+                    DbInteract.GetProduct(int.Parse(cartItem["IdProduct"])), 
                     int.Parse(cartItem["quantity"]),
                     int.Parse(cartItem["color"]),
                     int.Parse(cartItem["size"])));
@@ -132,7 +132,7 @@ namespace ShopASP.Controllers
             {
                 db.ExecuteQuery<cart>("insert into cart values({0}, {1}, {2})",
                     (Session["customer"] as customer).customer_id,
-                    Utility.getNowToSQLDateTime(),
+                    Utility.GetNowToSQLDateTime(),
                 0);
             }
             catch (Exception e){
@@ -149,6 +149,14 @@ namespace ShopASP.Controllers
                 cart_Detail.quantum = item.Quantity;
                 cart_Detail.size_id = item.Size;
                 cart_Detail.color_id = item.Color;
+
+                var product = db.products.FirstOrDefault(m => m.product_id.Equals(item.Product.Id));
+                product.product_quantum -= item.Quantity;
+                db.SubmitChanges();
+                //db.ExecuteQuery<product>("update product set product_quantum = product_quantum - {0} where product_id = {1}", 
+                //    item.Quantity, 
+                //    item.Product.Id);
+
                 db.ExecuteQuery<cart_detail>("insert into cart_detail values({0}, {1}, {2}, {3}, {4})",
                     cart_Detail.cart_id,
                     cart_Detail.product_id,

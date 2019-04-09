@@ -122,9 +122,9 @@ namespace ShopASP.Controllers
 
         public ActionResult Register()
         {
-            if (Session != null)
+            if (Session["customer"] != null)
             {
-                Session.Clear();
+                Session["customer"] = null;
             }
             return View();
         }

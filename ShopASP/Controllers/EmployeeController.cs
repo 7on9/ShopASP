@@ -27,7 +27,6 @@ namespace ShopASP.Controllers
         }
 
         // GET: /Employee/Login
-
         public ActionResult Login()
         {
             return View();
@@ -92,35 +91,35 @@ namespace ShopASP.Controllers
             return customers;
         }
 
-        private List<Cart> GetFullDetailOfCart(List<Cart> listCart)
-        {
-            List<Cart> carts = new List<Cart>();
-            carts.AddRange(listCart);
-            foreach (var cart in carts)
-            {
-                var products = (from a in db.cart_details
-                                where a.cart_id.Equals(cart.Id)
-                                select new
-                                {
-                                    a.cart_id,
-                                    a.product_id,
-                                    a.quantum,
-                                    a.color_id,
-                                    a.size_id
-                                }).ToList();
-                cart.Product = new List<CartItem>();
-                foreach (var product in products)
-                {
-                    cart.Product.Add(
-                        new CartItem(DbInteract.GetProduct(product.product_id), 
-                        product.quantum, 
-                        product.color_id, 
-                        product.size_id));
-                }
-            }
+        //private List<Cart> GetFullDetailOfCart(List<Cart> listCart)
+        //{
+        //    List<Cart> carts = new List<Cart>();
+        //    carts.AddRange(listCart);
+        //    foreach (var cart in carts)
+        //    {
+        //        var products = (from a in db.cart_details
+        //                        where a.cart_id.Equals(cart.Id)
+        //                        select new
+        //                        {
+        //                            a.cart_id,
+        //                            a.product_id,
+        //                            a.quantum,
+        //                            a.color_id,
+        //                            a.size_id
+        //                        }).ToList();
+        //        cart.Product = new List<CartItem>();
+        //        foreach (var product in products)
+        //        {
+        //            cart.Product.Add(
+        //                new CartItem(DbInteract.GetProduct(product.product_id), 
+        //                product.quantum, 
+        //                product.color_id, 
+        //                product.size_id));
+        //        }
+        //    }
 
-            return carts;
-        }
+        //    return carts;
+        //}
 
         public List<Product> GetAllProduct()
         {
@@ -131,6 +130,7 @@ namespace ShopASP.Controllers
                                   on a.product_id equals c.product_id
                                  join d in db.colors
                                   on c.color_id equals d.color_id
+                                 where a.product_quantum <= 0
                                  select new
                                  {
                                      a.product_id,
@@ -172,7 +172,7 @@ namespace ShopASP.Controllers
             return View();
         }
 
-        // GET 
+        // GET: Shop/Cart 
         public ActionResult Cart()
         {
             if (Session["employee"] == null)
@@ -183,6 +183,7 @@ namespace ShopASP.Controllers
             return View();
         }
 
+        // GET: Shop/Cart/:id 
         public ActionResult CartInfor(int id)
         {
             if (Session["employee"] == null)
@@ -190,7 +191,34 @@ namespace ShopASP.Controllers
                 return RedirectToAction("Login", "Employee");
             }
             ViewBag.Carts = waitingCarts;
+            ViewBag.Colors = db.colors.ToList();
+            ViewBag.Sizes = db.sizes.ToList();
+            
             return View(DbInteract.GetFullDetailOfCart(id));
+        }
+        // GET: Shop/ConfirmCart/:id 
+        public ActionResult ConfirmCart(int id)
+        {
+            if (Session["employee"] == null)
+            {
+                RedirectToAction("Login", "Employee");
+            }
+            ViewBag.Carts = waitingCarts;
+            ViewBag.Colors = db.colors.ToList();
+            ViewBag.Sizes = db.sizes.ToList();
+
+            var bill = db.bills.FirstOrDefault(m => m.cart_id.Equals(id));
+            if(bill == null)
+            {
+                DbInteract.CreateBill(id, (Session["employee"] as employee).employee_id);
+
+                //change cart's status 
+                cart cart = db.carts.FirstOrDefault(m => m.cart_id.Equals(id));
+                cart.cart_status = true;
+                db.SubmitChanges();
+                return RedirectToAction("CartInfor", new { id = id });
+            }
+            return RedirectToAction("CartInfor", new { id = id });
         }
 
         [HttpPost]
@@ -239,6 +267,31 @@ namespace ShopASP.Controllers
 
         }
 
+        public ActionResult EditProduct(int id)
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            return View(DbInteract.GetProduct(id));
+        }
+
+        public ActionResult DeleteProduct(int id)
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+
+            product product = db.products.FirstOrDefault(m => m.product_id == id);
+            if(product != null)
+            {
+                product.product_quantum = -1;
+                db.SubmitChanges();
+            }
+            return RedirectToAction("Product", "Employee");
+        }
+
         public ActionResult Product()
         {
             if (Session["employee"] == null)
@@ -247,6 +300,16 @@ namespace ShopASP.Controllers
             }
             ViewBag.Carts = waitingCarts;
             return View(GetAllProduct());
+        }
+
+        public ActionResult ProductDetail(int id)
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            
+            return View(DbInteract.GetProduct(id));
         }
 
         public ActionResult Logout()

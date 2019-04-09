@@ -1,20 +1,38 @@
 ﻿@model ShopASP.Models.Cart
+@using ShopASP.Models
 
 @{
+
     ViewBag.Title = "CartInfor";
     Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+
+    List<color> colors = (List<color>)ViewBag.Colors;
+    colors = colors == null ? new List<color>() : colors;
+
+    List<size> sizes = (List<size>)ViewBag.Sizes;
+    sizes = sizes == null ? new List<size>() : sizes;
+    float total = 0;
 }
 
-<h2>Thông tin giỏ hàng</h2>
+<h2>Thông tin đơn hàng</h2>
 
 <div>
     <hr />
     <div class="row col-lg-12 offset-0">
-        <button type="button" class="btn btn-success col-lg-2" onclick="confirmCart()" id="btnConfirmCart">
-            <i class="fa fa-check-square"></i>&nbsp; Xử lý đơn hàng
-        </button>
+        @if (Model.Status)
+        {
+            <span class="badge badge-success col-lg-2">
+                <i class="fa fa-check-square"></i>&nbsp; Đơn hàng đã xử lý
+            </span>
+        }
+        else
+        {
+            <button type="button" class="btn btn-success col-lg-2" onclick="confirmCart()" id="btnConfirmCart">
+                <i class="fa fa-check-square"></i>&nbsp; Xử lý đơn hàng
+            </button>
+        }
     </div>
-    <br/>
+    <br />
     <dl class="dl-horizontal row">
         <dt class="col-md-4">
             @Html.Label("Mã đơn")
@@ -76,21 +94,34 @@
                             <th>Số lượng</th>
                             <th>Màu</th>
                             <th>Size</th>
+                            <th>Thành tiền</th>
                         </tr>
                     </thead>
                     <tbody>
                         @for (int i = 0; i < Model.Product.Count; i++)
                         {
+                            total += Model.Product[i].Product.Price * Model.Product[i].Quantity;
                             <tr>
                                 <td>@(i + 1)</td>
                                 <td>@Model.Product[i].Product.Id</td>
                                 <td>@Model.Product[i].Product.Name</td>
                                 <td>@Model.Product[i].Quantity</td>
-                                <td>@Model.Product[i].Color</td>
-                                <td>@Model.Product[i].Size</td>
-
+                                <td>@(colors.Find(m => m.color_id == (Model.Product[i].Color)).color_name)</td>
+                                <td>@(sizes.Find(m => m.size_id == Model.Product[i].Size).size_name)</td>
+                                <td>@(Model.Product[i].Product.Price * Model.Product[i].Quantity) 000 VNĐ</td>
                             </tr>
                         }
+                        <tr>
+                            <td>Tổng cộng :</td>
+                            <td>@total 000 VNĐ</td>
+                            <td>@(total / 10)00 VNĐ (VAT)</td>
+                            <td>20 000 VNĐ (Ship)</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>
+                                @(total + 20 + total / 10)00 VNĐ
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

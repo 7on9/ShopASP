@@ -1,0 +1,110 @@
+﻿@model ShopASP.Models.Product
+@using ShopASP.Models
+
+@{
+
+    ViewBag.Title = "Thông tin sản phẩm";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+
+    List<color> colors = (List<color>)ViewBag.Colors;
+    colors = colors == null ? new List<color>() : colors;
+
+    List<size> sizes = (List<size>)ViewBag.Sizes;
+    sizes = sizes == null ? new List<size>() : sizes;
+}
+
+<h2>Thông tin sản phẩm</h2>
+
+<div>
+    <hr />
+    <div class="row col-lg-12 offset-0">
+        <button type="button" class="btn btn-danger col-lg-2" onclick="onDelete()" id="btnDeleteProduct">
+           <i class="fa fa-close"></i>&nbsp; Xóa sản phẩm
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-primary col-lg-2" onclick="onEdit()" id="btnEditProduct">
+           <i class="fa fa-edit"></i>&nbsp; Sửa sản phẩm
+        </button>
+    </div>
+    <br />
+    <dl class="dl-horizontal row">
+        <dt class="col-md-4">
+            @Html.Label("Mã sản phẩm")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(Model => Model.Id)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Tên sản phẩm")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Mô tả")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Describle)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Giá sản phẩm")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-md-4">
+            @Html.Label("Số lượng trong kho")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Quantum)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Tag")
+        </dt>
+
+        <dd class="col-md-8">
+            @Html.DisplayFor(model => model.Tag)
+        </dd>
+
+        <dt class="col-md-4">
+            @Html.Label("Màu sắc")
+        </dt>
+
+        <dd class="col-md-8">
+            <div class="w-25 h-25" style="background-color: @Model.Colors.Hex">
+
+            </div>
+        </dd>
+
+    </dl>
+    <div class="row">
+        <div class="col-md-4" style="font-weight: 700;">
+            @Html.Label("Hình ảnh sản phẩm")
+        </div>
+
+        <div class="col-lg-6">
+            <img src="@Model.ImagePaths.ImagePath" alt="product-img"/>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onDelete() {
+        alert("Bằng việc xác nhận, bạn sẽ tiến hành xóa mặt hàng này");
+        let pass = prompt("Nhập \"Xác nhận\" để tiến hành xóa");
+        if (pass === "Xác nhận") {
+            location.href = '/Employee/DeleteProduct/@Model.Id';
+        } else {
+            alert("Xác thực lỗi");
+        }
+    }
+</script>
