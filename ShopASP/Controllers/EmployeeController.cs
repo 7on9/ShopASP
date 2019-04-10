@@ -15,6 +15,7 @@ namespace ShopASP.Controllers
     {
         dbShopASPDataContext db = new dbShopASPDataContext();
         private List<Cart> waitingCarts = DbInteract.GetAllWaitingCart();
+        private List<Cart> solvedCarts = DbInteract.GetAllSolvedCart();
         // GET: Employee
         public ActionResult Index()
         {
@@ -390,6 +391,16 @@ namespace ShopASP.Controllers
                 return RedirectToAction("Login");
             }
             return View(DbInteract.GetProduct(id));
+        }
+
+        public ActionResult Bill()
+        {
+            if (Session["employee"] == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+            ViewBag.CartsSolved = solvedCarts;
+            return View();
         }
 
         public ActionResult Logout()

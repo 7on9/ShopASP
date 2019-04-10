@@ -688,6 +688,7 @@
     </Content>
     <Content Include="Views\Employee\ProductDetail.cshtml" />
     <Content Include="Views\Employee\EditProduct.cshtml" />
+    <Content Include="Views\Employee\Bill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

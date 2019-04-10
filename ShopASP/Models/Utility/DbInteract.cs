@@ -108,6 +108,33 @@ namespace ShopASP.Models.Utility
 
             return carts;
         }
+        public static List<Cart> GetAllSolvedCart()
+        {
+            dbShopASPDataContext db = new dbShopASPDataContext();
+            var listCart = (from a in db.carts
+                            where a.cart_status.Equals(true)
+                            select new
+                            {
+                                a.cart_id,
+                                a.customer_id,
+                                a.time_create,
+                                a.cart_status
+                            }).ToList();
+
+            List<Cart> carts = new List<Cart>();
+            int i = 0;
+            foreach (var cart in listCart)
+            {
+                carts.Add(new Cart());
+                carts[i].Id = cart.cart_id;
+                carts[i].Customer = GetCustomerById(cart.customer_id);
+                carts[i].TimeCreate = cart.time_create.ToString();
+                carts[i].Status = (bool)cart.cart_status;
+                i++;
+            }
+
+            return carts;
+        }
 
         public static Customer GetCustomerById(int id)
         {
